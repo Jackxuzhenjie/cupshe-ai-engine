@@ -28,6 +28,9 @@ import {
   Workflow,
   Bot,
   Building2,
+  Users,
+  MessageSquare,
+  PlusCircle,
 } from "lucide-react";
 
 interface NavItem {
@@ -84,7 +87,9 @@ const navGroups: NavGroup[] = [
     labelEn: "Management",
     items: [
       { path: "/department", iconEl: <Building2 size={20} />, zh: "部门中心", en: "Department" },
+      { path: "/org", iconEl: <Users size={20} />, zh: "组织架构", en: "Org Structure" },
       { path: "/control-tower", iconEl: <Gauge size={20} />, zh: "指挥塔", en: "Control Tower" },
+      { path: "/feishu", iconEl: <MessageSquare size={20} />, zh: "飞书集成", en: "Feishu" },
       { path: "/admin", iconEl: <Settings size={20} />, zh: "管理后台", en: "Admin" },
     ],
   },
@@ -227,23 +232,32 @@ export default function AppLayout({ children }: { children: ReactNode }) {
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              className="lg:hidden absolute top-14 left-0 right-0 z-50 bg-card border-b border-border shadow-lg"
+              className="lg:hidden absolute top-14 left-0 right-0 z-50 bg-card border-b border-border shadow-lg max-h-[70vh] overflow-y-auto"
             >
-              <nav className="p-3 grid grid-cols-2 gap-1.5">
-                {navItems.map((item) => (
-                  <Link key={item.path} href={item.path}>
-                    <div
-                      onClick={() => setMobileMenuOpen(false)}
-                      className={`flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors ${
-                        isActive(item.path)
-                          ? "bg-primary/10 text-primary"
-                          : "text-muted-foreground hover:bg-muted"
-                      }`}
-                    >
-                      {item.iconEl}
-                      <span className="text-sm font-medium">{t(item.zh, item.en)}</span>
+              <nav className="p-3">
+                {navGroups.map((group, gi) => (
+                  <div key={gi} className="mb-2">
+                    <div className="px-2 py-1 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                      {t(group.labelZh, group.labelEn)}
                     </div>
-                  </Link>
+                    <div className="grid grid-cols-2 gap-1.5">
+                      {group.items.map((item) => (
+                        <Link key={item.path} href={item.path}>
+                          <div
+                            onClick={() => setMobileMenuOpen(false)}
+                            className={`flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors ${
+                              isActive(item.path)
+                                ? "bg-primary/10 text-primary"
+                                : "text-muted-foreground hover:bg-muted"
+                            }`}
+                          >
+                            {item.iconEl}
+                            <span className="text-sm font-medium">{t(item.zh, item.en)}</span>
+                          </div>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
                 ))}
               </nav>
             </motion.div>
@@ -265,7 +279,7 @@ export default function AppLayout({ children }: { children: ReactNode }) {
 
         {/* Mobile bottom nav - quick access to top 5 items */}
         <nav className="lg:hidden flex items-center justify-around border-t border-border bg-card py-1.5 shrink-0 safe-area-bottom">
-          {navItems.slice(0, 5).map((item) => (
+          {[navItems[0], navItems[2], navItems[7], navItems[8], navItems[11]].filter(Boolean).map((item) => (
             <Link key={item.path} href={item.path}>
               <div
                 className={`flex flex-col items-center gap-0.5 px-2 py-1 rounded-lg transition-colors ${

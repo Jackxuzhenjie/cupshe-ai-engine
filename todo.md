@@ -1,35 +1,36 @@
-# Cases Library Rebuild
+# Feishu Integration & Permission System
 
-## Phase 1: Data Model & Seed Data
-- [ ] Design comprehensive case data model with metadata, value scorecard, maturity level
-- [ ] Create seed data for 10+ cases across business scenarios
-- [ ] Create playbook data with step-by-step instructions
-- [ ] Create AI tools directory data
-- [ ] Add weekly/monthly best case data
+## Phase 1: Upgrade & Data Models
+- [x] Upgrade to web-db-user (full-stack)
+- [x] Design DB schema: users, roles, permissions, org_departments, org_members
+- [x] Design Feishu config storage model
 
-## Phase 2: Cases Library Main Page
-- [ ] 4-layer tab structure: Cases / Playbooks / Prompts / Tools
-- [ ] Business-scenario-based classification (not tool-based)
-- [ ] Multi-dimensional filtering (department, maturity, value type)
-- [ ] Weighted scoring display (business value 40%, replicability 30%, innovation 20%, virality 10%)
-- [ ] Case of the Week / Month highlights
-- [ ] Visual sharing cards (for Feishu/Slack)
-- [ ] AI Maturity Map visualization
+## Phase 2: Auth & Permissions
+- [x] Feishu OAuth login flow (simulated for static, real config for production)
+- [x] Multi-level permission system: Super Admin / Dept Admin / Employee
+- [x] User management UI with role assignment
+- [x] Permission-based navigation and feature gating
 
-## Phase 3: Case Detail Page
-- [ ] Standard metadata display
-- [ ] AI Value Scorecard (5 dimensions: efficiency, productivity, cost, revenue, customer value)
-- [ ] Maturity level badge (L1-L5)
-- [ ] Related Playbook with steps
-- [ ] Related Prompts (linked to Prompt Library)
-- [ ] Related Tools
-- [ ] Learning path: Case → Method → Prompt → Apply
+## Phase 3: Case Submission Portal
+- [x] Case submission form with standard metadata fields
+- [x] Multi-source upload: Feishu doc link, local file, web URL, video link
+- [x] Agent/Prompt library association selector
+- [x] Submission review workflow (draft → review → published)
+- [ ] AI-assisted field suggestions
 
-## Phase 4: Control Tower Enhancement
-- [ ] AI Transformation Dashboard metrics (case count, active users, efficiency gain, maturity level)
-- [ ] Department maturity map
+## Phase 4: Org Structure
+- [x] Organization tree view with department hierarchy
+- [x] Feishu org sync button (simulated API)
+- [x] People selector with checkbox (multi-select)
+- [x] Department-user mapping management
 
-## Phase 5: Test & Deliver
-- [ ] Test all pages bilingual
-- [ ] Test responsive design
-- [ ] Save checkpoint and deliver
+## Phase 5: Feishu Notifications
+- [x] Webhook configuration UI
+- [x] Case notification templates
+- [x] Weekly/Monthly best case auto-push config
+
+## Phase 6: Testing & Delivery
+- [x] Full integration test (22 vitest tests passed)
+- [x] Mobile responsive check
+- [x] Bilingual verification
+- [x] Final checkpoint and delivery
