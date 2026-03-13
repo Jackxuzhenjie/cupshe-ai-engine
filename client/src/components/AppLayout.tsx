@@ -24,6 +24,10 @@ import {
   Menu,
   X,
   Sparkles,
+  FileText,
+  Workflow,
+  Bot,
+  Building2,
 } from "lucide-react";
 
 interface NavItem {
@@ -33,18 +37,60 @@ interface NavItem {
   en: string;
 }
 
-const navItems: NavItem[] = [
-  { path: "/", iconEl: <LayoutDashboard size={20} />, zh: "仪表盘", en: "Dashboard" },
-  { path: "/newsletter", iconEl: <Newspaper size={20} />, zh: "AI周刊", en: "Newsletter" },
-  { path: "/wishes", iconEl: <Lightbulb size={20} />, zh: "许愿池", en: "Wish Pool" },
-  { path: "/challenges", iconEl: <Trophy size={20} />, zh: "AI挑战", en: "Challenges" },
-  { path: "/bounty", iconEl: <Target size={20} />, zh: "悬赏榜", en: "Bounty Board" },
-  { path: "/skills", iconEl: <GitBranch size={20} />, zh: "技能树", en: "Skill Tree" },
-  { path: "/cases", iconEl: <BookOpen size={20} />, zh: "案例库", en: "Cases Library" },
-  { path: "/leaderboard", iconEl: <Medal size={20} />, zh: "排行榜", en: "Leaderboard" },
-  { path: "/control-tower", iconEl: <Gauge size={20} />, zh: "指挥塔", en: "Control Tower" },
-  { path: "/admin", iconEl: <Settings size={20} />, zh: "管理后台", en: "Admin" },
+interface NavGroup {
+  labelZh: string;
+  labelEn: string;
+  items: NavItem[];
+}
+
+const navGroups: NavGroup[] = [
+  {
+    labelZh: "核心",
+    labelEn: "Core",
+    items: [
+      { path: "/", iconEl: <LayoutDashboard size={20} />, zh: "仪表盘", en: "Dashboard" },
+      { path: "/newsletter", iconEl: <Newspaper size={20} />, zh: "AI周刊", en: "Newsletter" },
+    ],
+  },
+  {
+    labelZh: "参与",
+    labelEn: "Engage",
+    items: [
+      { path: "/wishes", iconEl: <Lightbulb size={20} />, zh: "许愿池", en: "Wish Pool" },
+      { path: "/challenges", iconEl: <Trophy size={20} />, zh: "AI挑战", en: "Challenges" },
+      { path: "/bounty", iconEl: <Target size={20} />, zh: "悬赏榜", en: "Bounty Board" },
+    ],
+  },
+  {
+    labelZh: "AI资产",
+    labelEn: "AI Assets",
+    items: [
+      { path: "/prompts", iconEl: <FileText size={20} />, zh: "Prompt库", en: "Prompt Library" },
+      { path: "/workflows", iconEl: <Workflow size={20} />, zh: "工作流库", en: "Workflow Library" },
+      { path: "/agents", iconEl: <Bot size={20} />, zh: "Agent库", en: "Agent Library" },
+    ],
+  },
+  {
+    labelZh: "成长",
+    labelEn: "Growth",
+    items: [
+      { path: "/skills", iconEl: <GitBranch size={20} />, zh: "技能树", en: "Skill Tree" },
+      { path: "/cases", iconEl: <BookOpen size={20} />, zh: "案例库", en: "Cases Library" },
+      { path: "/leaderboard", iconEl: <Medal size={20} />, zh: "排行榜", en: "Leaderboard" },
+    ],
+  },
+  {
+    labelZh: "管理",
+    labelEn: "Management",
+    items: [
+      { path: "/department", iconEl: <Building2 size={20} />, zh: "部门中心", en: "Department" },
+      { path: "/control-tower", iconEl: <Gauge size={20} />, zh: "指挥塔", en: "Control Tower" },
+      { path: "/admin", iconEl: <Settings size={20} />, zh: "管理后台", en: "Admin" },
+    ],
+  },
 ];
+
+const navItems: NavItem[] = navGroups.flatMap((g) => g.items);
 
 export default function AppLayout({ children }: { children: ReactNode }) {
   const [collapsed, setCollapsed] = useState(false);
@@ -86,28 +132,40 @@ export default function AppLayout({ children }: { children: ReactNode }) {
           )}
         </div>
 
-        {/* Nav items */}
-        <nav className="flex-1 py-3 px-2 space-y-0.5 overflow-y-auto">
-          {navItems.map((item) => (
-            <Link key={item.path} href={item.path}>
-              <div
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 group ${
-                  isActive(item.path)
-                    ? "bg-sidebar-accent text-sidebar-primary"
-                    : "text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground"
-                }`}
-              >
-                <span className="shrink-0">{item.iconEl}</span>
-                {!collapsed && (
-                  <span className="text-sm font-medium truncate">
-                    {t(item.zh, item.en)}
-                  </span>
-                )}
-                {isActive(item.path) && (
-                  <div className="ml-auto w-1.5 h-1.5 rounded-full bg-sidebar-primary shrink-0" />
-                )}
+        {/* Nav items - grouped */}
+        <nav className="flex-1 py-2 px-2 overflow-y-auto">
+          {navGroups.map((group, gi) => (
+            <div key={gi} className="mb-1">
+              {!collapsed && (
+                <div className="px-3 pt-3 pb-1 text-[10px] font-semibold uppercase tracking-wider text-sidebar-foreground/40">
+                  {t(group.labelZh, group.labelEn)}
+                </div>
+              )}
+              {collapsed && gi > 0 && <div className="mx-3 my-1.5 border-t border-sidebar-border/30" />}
+              <div className="space-y-0.5">
+                {group.items.map((item) => (
+                  <Link key={item.path} href={item.path}>
+                    <div
+                      className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 group ${
+                        isActive(item.path)
+                          ? "bg-sidebar-accent text-sidebar-primary"
+                          : "text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground"
+                      }`}
+                    >
+                      <span className="shrink-0">{item.iconEl}</span>
+                      {!collapsed && (
+                        <span className="text-sm font-medium truncate">
+                          {t(item.zh, item.en)}
+                        </span>
+                      )}
+                      {isActive(item.path) && (
+                        <div className="ml-auto w-1.5 h-1.5 rounded-full bg-sidebar-primary shrink-0" />
+                      )}
+                    </div>
+                  </Link>
+                ))}
               </div>
-            </Link>
+            </div>
           ))}
         </nav>
 

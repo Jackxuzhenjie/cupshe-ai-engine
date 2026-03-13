@@ -17,6 +17,10 @@ import CasesLibrary from "./pages/CasesLibrary";
 import Leaderboard from "./pages/Leaderboard";
 import ControlTower from "./pages/ControlTower";
 import Admin from "./pages/Admin";
+import PromptLibrary from "./pages/PromptLibrary";
+import WorkflowLibrary from "./pages/WorkflowLibrary";
+import AgentLibrary from "./pages/AgentLibrary";
+import DepartmentCenter from "./pages/DepartmentCenter";
 import NotFound from "./pages/NotFound";
 
 function Router() {
@@ -33,6 +37,10 @@ function Router() {
         <Route path="/skills" component={SkillTree} />
         <Route path="/cases" component={CasesLibrary} />
         <Route path="/leaderboard" component={Leaderboard} />
+        <Route path="/prompts" component={PromptLibrary} />
+        <Route path="/workflows" component={WorkflowLibrary} />
+        <Route path="/agents" component={AgentLibrary} />
+        <Route path="/department" component={DepartmentCenter} />
         <Route path="/control-tower" component={ControlTower} />
         <Route path="/admin" component={Admin} />
         <Route path="/404" component={NotFound} />
