@@ -24,6 +24,7 @@ import AgentLibrary from "./pages/AgentLibrary";
 import DepartmentCenter from "./pages/DepartmentCenter";
 import OrgStructure from "./pages/OrgStructure";
 import FeishuSettings from "./pages/FeishuSettings";
+import GlobalIntelligence from "./pages/GlobalIntelligence";
 import NotFound from "./pages/NotFound";
 
 function Router() {
@@ -46,6 +47,7 @@ function Router() {
         <Route path="/agents" component={AgentLibrary} />
         <Route path="/department" component={DepartmentCenter} />
         <Route path="/org" component={OrgStructure} />
+        <Route path="/intelligence" component={GlobalIntelligence} />
         <Route path="/feishu" component={FeishuSettings} />
         <Route path="/control-tower" component={ControlTower} />
         <Route path="/admin" component={Admin} />

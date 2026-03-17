@@ -31,6 +31,7 @@ import {
   Users,
   MessageSquare,
   PlusCircle,
+  Rss,
 } from "lucide-react";
 
 interface NavItem {
@@ -53,6 +54,7 @@ const navGroups: NavGroup[] = [
     items: [
       { path: "/", iconEl: <LayoutDashboard size={20} />, zh: "仪表盘", en: "Dashboard" },
       { path: "/newsletter", iconEl: <Newspaper size={20} />, zh: "AI周刊", en: "Newsletter" },
+      { path: "/intelligence", iconEl: <Rss size={20} />, zh: "全球AI动态", en: "AI Intelligence" },
     ],
   },
   {

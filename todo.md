@@ -34,3 +34,19 @@
 - [x] Mobile responsive check
 - [x] Bilingual verification
 - [x] Final checkpoint and delivery
+
+## Global AI Intelligence Module (New)
+- [x] Build Global AI Intelligence page with auto-curated news feeds
+- [x] Three pilot focus areas: Performance Marketing AI, Creative AI, Data Analytics AI
+- [x] News cards with source, date, category, relevance tags
+- [x] Search and filter by pilot area, content type, date range
+- [x] Bilingual support (Chinese/English)
+- [x] Seed data with real-world AI news and cases
+
+## Design Updates (Align with Latest Project Plan)
+- [x] Update Dashboard with 1-3-6-9 phasing timeline and three pilot projects
+- [x] Update Dashboard KPIs to reflect realistic targets (L2/L3)
+- [x] Update ControlTower with three pilot projects tracking
+- [x] Update navigation to include Global AI Intelligence
+- [x] Update SkillTree to reflect bi-weekly skill unlock cadence
+- [x] Align data with latest governance structure (CTO as PM)
