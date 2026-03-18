@@ -1,7 +1,7 @@
 /*
  * ControlTower — CEO-friendly executive dashboard
  * Design: Extremely simple, clean, at-a-glance metrics
- * Includes: AI Transformation Dashboard, 3 pilot project tracking, 1-3-6-9 timeline, L2/L3 targets
+ * Includes: AI Transformation Dashboard, 3 pilot project tracking, 1-3-6-9 timeline, L2-L3/L3-L4 targets
  * CEO只看 Control Tower，必须非常简单
  */
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -48,8 +48,8 @@ const timelinePhases = [
     statusEn: "Upcoming",
     status: "upcoming" as const,
     progress: 0,
-    milestonesZh: ["平台搭建→试运行", "试点Phase 1", "全员→L1+"],
-    milestonesEn: ["Platform build→trial", "Pilot Phase 1", "All→L1+"],
+    milestonesZh: ["平台搭建→试运行", "试点Phase 1", "Q2滚动迭代"],
+    milestonesEn: ["Platform build→trial", "Pilot Phase 1", "Q2 Rolling Iteration"],
   },
   {
     id: "month6",
@@ -61,8 +61,8 @@ const timelinePhases = [
     statusEn: "Upcoming",
     status: "upcoming" as const,
     progress: 0,
-    milestonesZh: ["试点Phase 2", "开放申请试点", "全员→L2"],
-    milestonesEn: ["Pilot Phase 2", "Open pilot apps", "All→L2"],
+    milestonesZh: ["试点Phase 2", "开放申请试点", "普通→L2/试点→L3"],
+    milestonesEn: ["Pilot Phase 2", "Open pilot apps", "Regular→L2/Pilot→L3"],
   },
   {
     id: "month9",
@@ -74,8 +74,8 @@ const timelinePhases = [
     statusEn: "Upcoming",
     status: "upcoming" as const,
     progress: 0,
-    milestonesZh: ["SOP固化", "全中心L2/试点L3", "年度表彰"],
-    milestonesEn: ["SOP finalized", "All L2/Pilot L3", "Annual awards"],
+    milestonesZh: ["SOP固化", "普通L2-L3/试点L3-L4", "年度表彰"],
+    milestonesEn: ["SOP finalized", "Regular L2-L3/Pilot L3-L4", "Annual awards"],
   },
 ];
 
@@ -93,7 +93,7 @@ const pilotProjects = [
     flowsEmbedded: "1/2",
     cases: 3,
     efficiency: "+15%",
-    targetL: "L3",
+    targetL: "L3-L4",
   },
   {
     nameZh: "创意AI化",
@@ -107,7 +107,7 @@ const pilotProjects = [
     flowsEmbedded: "1/2",
     cases: 2,
     efficiency: "+20%",
-    targetL: "L3",
+    targetL: "L3-L4",
   },
   {
     nameZh: "数据分析AI化",
@@ -121,7 +121,7 @@ const pilotProjects = [
     flowsEmbedded: "0/2",
     cases: 2,
     efficiency: "+12%",
-    targetL: "L3",
+    targetL: "L3-L4",
   },
 ];
 
@@ -164,7 +164,7 @@ export default function ControlTower() {
             {t("AI 指挥塔", "AI Control Tower")}
           </h1>
           <p className="text-white/60 text-xs mt-1">
-            {t("管理层AI转型全局视图 · 目标：全中心L2 / 试点L3", "Executive AI overview · Target: All Centers L2 / Pilots L3")}
+            {t("管理层AI转型全局视图 · 目标：普通中心L2-L3 / 试点中心L3-L4", "Executive AI overview · Target: Regular Centers L2-L3 / Pilot Centers L3-L4")}
           </p>
         </div>
       </motion.div>
@@ -175,7 +175,7 @@ export default function ControlTower() {
           { label: { zh: "AI案例数量", en: "AI Cases" }, value: dash.totalCases, sub: `+${dash.monthlyNewCases} ${t("本月", "this month")}`, icon: BookOpen, iconColor: "text-ocean-light", iconBg: "bg-ocean-light/10" },
           { label: { zh: "AI使用人数", en: "Active Users" }, value: dash.activeUsers, sub: `+32 ${t("本月", "this month")}`, icon: Users, iconColor: "text-teal", iconBg: "bg-teal/10" },
           { label: { zh: "效率提升", en: "Efficiency Gain" }, value: `+${dash.efficiencyGain}%`, sub: `+5% ${t("较上月", "vs last month")}`, icon: TrendingUp, iconColor: "text-coral", iconBg: "bg-coral/10" },
-          { label: { zh: "AI成熟度", en: "AI Maturity" }, value: dash.avgMaturityLevel, sub: t("目标：全中心L2 / 试点L3", "Target: All L2 / Pilots L3"), icon: Layers, iconColor: "text-primary", iconBg: "bg-primary/10", noArrow: true },
+          { label: { zh: "AI成熟度", en: "AI Maturity" }, value: dash.avgMaturityLevel, sub: t("目标：普通L2-L3 / 试点L3-L4", "Target: Regular L2-L3 / Pilots L3-L4"), icon: Layers, iconColor: "text-primary", iconBg: "bg-primary/10", noArrow: true },
         ].map((metric, i) => (
           <motion.div key={i} variants={item}>
             <Card className="border-0 shadow-sm overflow-hidden">
@@ -273,7 +273,7 @@ export default function ControlTower() {
                 {t("三大公司级试点项目", "Three Company-Level Pilots")}
               </CardTitle>
               <span className="text-[10px] text-muted-foreground">
-                {t("持续至12月底 · 目标 L3", "Through Dec · Target L3")}
+                {t("持续至12月底 · 目标 L3-L4 · 每季度滚动迭代", "Through Dec · Target L3-L4 · Quarterly Rolling")}
               </span>
             </div>
           </CardHeader>
@@ -394,7 +394,7 @@ export default function ControlTower() {
                 {t("AI 成熟度地图", "AI Maturity Map")}
               </CardTitle>
               <p className="text-[10px] text-muted-foreground mt-1">
-                {t("全中心目标 L2 · 试点目标 L3", "All Centers → L2 · Pilots → L3")}
+                {t("普通中心 L2-L3 · 试点中心 L3-L4 · 每季度滚动迭代", "Regular Centers L2-L3 · Pilot Centers L3-L4 · Quarterly Rolling")}
               </p>
             </CardHeader>
             <CardContent>
@@ -402,7 +402,7 @@ export default function ControlTower() {
                 {departmentMaturityMap.map((dept) => {
                   const levelInfo = maturityLevels[dept.level];
                   const isPilot = ["营销中心", "创意中心", "数据中心"].includes(dept.departmentZh);
-                  const targetLevel = isPilot ? "L3" : "L2";
+                  const targetLevel = isPilot ? "L3-L4" : "L2-L3";
                   return (
                     <div key={dept.departmentEn} className="flex items-center gap-2">
                       <div className="w-20 lg:w-24 shrink-0 flex items-center gap-1">
@@ -535,7 +535,7 @@ export default function ControlTower() {
         {[
           { icon: Lightbulb, iconColor: "text-warning", value: m.totalWishes, label: { zh: "许愿总数", en: "Total Wishes" }, sub: `${Math.round((m.solvedWishes / m.totalWishes) * 100)}% ${t("已解决", "resolved")}`, subColor: "text-success" },
           { icon: Trophy, iconColor: "text-coral", value: m.activeChallenges, label: { zh: "活跃挑战", en: "Active Challenges" }, sub: "", subColor: "" },
-          { icon: GitBranch, iconColor: "text-primary", value: m.totalSkillUnlocks, label: { zh: "技能解锁", en: "Skill Unlocks" }, sub: t("双周一技能", "Bi-weekly"), subColor: "text-muted-foreground" },
+          { icon: GitBranch, iconColor: "text-primary", value: m.totalSkillUnlocks, label: { zh: "技能解锁", en: "Skill Unlocks" }, sub: t("双周技能学习+案例分享", "Bi-weekly Skill+Cases"), subColor: "text-muted-foreground" },
           { icon: Target, iconColor: "text-teal", value: dash.weeklyNewCases, label: { zh: "本周新案例", en: "New Cases This Week" }, sub: "", subColor: "" },
         ].map((stat, i) => (
           <motion.div key={i} variants={item}>

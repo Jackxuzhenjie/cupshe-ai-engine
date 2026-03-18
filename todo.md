@@ -50,3 +50,17 @@
 - [x] Update navigation to include Global AI Intelligence
 - [x] Update SkillTree to reflect bi-weekly skill unlock cadence
 - [x] Align data with latest governance structure (CTO as PM)
+## Platform Updates - Align with Latest Strategy v2 (March 2026)
+- [x] Update Dashboard KPIs and targets: regular centers L2-L3, pilot centers L3-L4
+- [x] Update Dashboard pilot project cards with quarterly rolling iteration
+- [x] Update ControlTower maturity targets to L2-L3/L3-L4
+- [x] Update ControlTower operational rhythm: weekly report + bi-weekly skill learning & case sharing
+- [x] Update SkillTree to reflect bi-weekly skill learning + case sharing cadence
+- [x] Update seedData with latest maturity targets and cadence information
+- [x] Verify all pages reflect updated strategy consistently
+
+## New Executive PPT - AI Transformation Engine Introduction
+- [ ] Create new executive-facing PPT introducing the platform
+- [ ] Cover platform purpose, core modules, value proposition
+- [ ] Include governance structure and operational rhythm
+- [ ] Design for C-suite audience presentation

@@ -219,8 +219,8 @@ export default function Dashboard() {
           </h1>
           <p className="text-white/80 text-sm lg:text-base max-w-lg">
             {t(
-              "2026年3月 · 项目启动月 · 三大试点推进中 · 平台4月上线",
-              "March 2026 · Launch Month · 3 Pilots In Progress · Platform Live in April"
+              "2026年3月 · 项目启动月 · 三大试点推进中 · 每周周报+双周技能学习",
+              "March 2026 · Launch Month · 3 Pilots In Progress · Weekly Report + Bi-weekly Skills"
             )}
           </p>
         </div>
@@ -262,7 +262,7 @@ export default function Dashboard() {
                 {t("三大公司级试点项目", "Three Company-Level Pilot Projects")}
               </CardTitle>
               <p className="text-xs text-muted-foreground mt-1">
-                {t("持续至12月底 · Phase 1: 4-6月 · Phase 2: 7-9月", "Through Dec · Phase 1: Apr-Jun · Phase 2: Jul-Sep")}
+                {t("持续至12月底 · 试点目标L3-L4 · 普通目标L2-L3 · 每季度滚动迭代", "Through Dec · Pilots L3-L4 · Regular L2-L3 · Quarterly Rolling")}
               </p>
             </div>
             <Badge variant="secondary" className="text-[10px] bg-coral/10 text-coral border-0">

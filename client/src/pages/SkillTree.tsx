@@ -52,8 +52,8 @@ export default function SkillTree() {
           </div>
           <p className="text-sm text-muted-foreground max-w-lg">
             {t(
-              "四层技能体系，从基础到系统，解锁你的AI能力图谱",
-              "Four-layer skill system, from foundation to system level, unlock your AI capability map"
+              "每双周一次主题技能学习与上一期案例分享 · 四层技能体系 · 每季度滚动迭代",
+              "Bi-weekly skill learning + case sharing · Four-layer system · Quarterly rolling iteration"
             )}
           </p>
         </div>
