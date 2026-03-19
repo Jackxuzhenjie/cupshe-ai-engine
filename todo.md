@@ -87,3 +87,13 @@
 ## Brand Logo Update (March 2026)
 - [x] Replace sidebar logo with official CUPSHE text logo
 - [x] Update sidebar logo to CUPSHE with palm tree icon
+
+## Skill Tree Deep Redesign (March 2026)
+- [x] Research cupshe.com business model, value chain, and all business scenarios
+- [x] Map 14 department functions to specific AI skill needs
+- [x] Design universal/foundational AI skills tier
+- [x] Design department-specific AI skills for each center
+- [x] Design pilot-project-specific skills (效果营销AI化, 创意AI化, 数据分析AI化)
+- [x] Implement enriched skill tree data structure
+- [x] Redesign SkillTree UI with user-centric navigation (filter by dept, project, level)
+- [x] Ensure coverage of full cross-border e-commerce value chain scenarios
