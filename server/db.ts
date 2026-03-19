@@ -1,7 +1,7 @@
 import { eq, desc, asc, and, like, sql, inArray } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, departments, caseSubmissions, feishuConfig } from "../drizzle/schema";
-import type { InsertDepartment, InsertCaseSubmission, InsertFeishuConfig } from "../drizzle/schema";
+import { InsertUser, users, departments, caseSubmissions, feishuConfig, weeklyReports } from "../drizzle/schema";
+import type { InsertDepartment, InsertCaseSubmission, InsertFeishuConfig, InsertWeeklyReport } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -246,4 +246,103 @@ export async function upsertFeishuConfig(data: Partial<InsertFeishuConfig>) {
   } else {
     await db.insert(feishuConfig).values(data as InsertFeishuConfig);
   }
+}
+
+// ========== WEEKLY REPORT QUERIES ==========
+
+export async function listWeeklyReports(opts?: {
+  weekId?: string;
+  centerId?: string;
+  status?: string;
+  limit?: number;
+  offset?: number;
+}) {
+  const db = await getDb();
+  if (!db) return { reports: [], total: 0 };
+  const conditions = [];
+  if (opts?.weekId) conditions.push(eq(weeklyReports.weekId, opts.weekId));
+  if (opts?.centerId) conditions.push(eq(weeklyReports.centerId, opts.centerId));
+  if (opts?.status) conditions.push(eq(weeklyReports.status, opts.status as any));
+
+  const where = conditions.length > 0 ? and(...conditions) : undefined;
+  const limit = opts?.limit ?? 50;
+  const offset = opts?.offset ?? 0;
+
+  const [reportsResult, countResult] = await Promise.all([
+    where
+      ? db.select().from(weeklyReports).where(where).orderBy(desc(weeklyReports.createdAt)).limit(limit).offset(offset)
+      : db.select().from(weeklyReports).orderBy(desc(weeklyReports.createdAt)).limit(limit).offset(offset),
+    where
+      ? db.select({ count: sql<number>`count(*)` }).from(weeklyReports).where(where)
+      : db.select({ count: sql<number>`count(*)` }).from(weeklyReports),
+  ]);
+
+  return { reports: reportsResult, total: countResult[0]?.count ?? 0 };
+}
+
+export async function getWeeklyReport(id: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.select().from(weeklyReports).where(eq(weeklyReports.id, id)).limit(1);
+  return result[0];
+}
+
+export async function getWeeklyReportByWeekAndCenter(weekId: string, centerId: string) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.select().from(weeklyReports)
+    .where(and(eq(weeklyReports.weekId, weekId), eq(weeklyReports.centerId, centerId)))
+    .limit(1);
+  return result[0];
+}
+
+export async function createWeeklyReport(data: InsertWeeklyReport) {
+  const db = await getDb();
+  if (!db) return;
+  await db.insert(weeklyReports).values(data);
+}
+
+export async function updateWeeklyReport(id: number, data: Partial<InsertWeeklyReport>) {
+  const db = await getDb();
+  if (!db) return;
+  await db.update(weeklyReports).set(data).where(eq(weeklyReports.id, id));
+}
+
+export async function upsertWeeklyReport(data: InsertWeeklyReport) {
+  const db = await getDb();
+  if (!db) return;
+  const existing = await getWeeklyReportByWeekAndCenter(data.weekId, data.centerId);
+  if (existing) {
+    const { weekId, centerId, ...updateData } = data;
+    await db.update(weeklyReports).set(updateData).where(eq(weeklyReports.id, existing.id));
+  } else {
+    await db.insert(weeklyReports).values(data);
+  }
+}
+
+export async function deleteWeeklyReport(id: number) {
+  const db = await getDb();
+  if (!db) return;
+  await db.delete(weeklyReports).where(eq(weeklyReports.id, id));
+}
+
+export async function getWeeklyReportSummary(weekId: string) {
+  const db = await getDb();
+  if (!db) return { total: 0, green: 0, yellow: 0, red: 0, avgProgress: 0 };
+  const reports = await db.select().from(weeklyReports).where(eq(weeklyReports.weekId, weekId));
+  const total = reports.length;
+  const green = reports.filter(r => r.status === "green").length;
+  const yellow = reports.filter(r => r.status === "yellow").length;
+  const red = reports.filter(r => r.status === "red").length;
+  const avgProgress = total > 0 ? Math.round(reports.reduce((sum, r) => sum + (r.progressPercent ?? 0), 0) / total) : 0;
+  return { total, green, yellow, red, avgProgress };
+}
+
+export async function getAvailableWeeks() {
+  const db = await getDb();
+  if (!db) return [];
+  const result = await db.selectDistinct({ weekId: weeklyReports.weekId })
+    .from(weeklyReports)
+    .orderBy(desc(weeklyReports.weekId));
+  return result.map(r => r.weekId);
 }

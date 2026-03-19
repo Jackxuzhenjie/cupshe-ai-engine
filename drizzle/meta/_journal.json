@@ -15,6 +15,13 @@
       "when": 1773373780284,
       "tag": "0001_magenta_guardian",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1773907636892,
+      "tag": "0002_eminent_naoko",
+      "breakpoints": true
     }
   ]
 }

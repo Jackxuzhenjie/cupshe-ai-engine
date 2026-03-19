@@ -125,5 +125,18 @@
 - [x] Update timeline: March deployment, Q2 direction-setting goals
 - [x] Add regular AI sharing sessions to operational rhythm
 - [x] Update Dashboard with real project PM and stakeholder info
-- [ ] Update executive PPT governance slide with real personnel
-- [ ] Update role training PPT with real personnel assignments
+- [x] Update executive PPT governance slide with real personnel
+- [x] Update role training PPT with real personnel assignments
+
+## Weekly Report System - PMO Claire (March 2026)
+- [x] Design DB schema for weekly reports (weeklyReports table with center, status, progress, issues, plans)
+- [x] Create tRPC procedures for CRUD operations on weekly reports
+- [x] Build weekly report entry form page (WeeklyReport.tsx) with R/Y/G status selector
+- [x] Support per-center AI progress, issues, next-week plans input
+- [x] Build weekly report summary dashboard (WeeklyReportSummary.tsx) with auto-aggregation
+- [x] CEO Review one-page view with all centers' R/Y/G status at a glance
+- [x] Historical trend tracking (status changes over weeks)
+- [x] Add WeeklyReport pages to sidebar navigation
+- [x] Role-based access: PMO/Admin can edit, CEO/CTO can view summary
+- [x] Write vitest tests for weekly report procedures
+- [x] Mobile responsive design for both entry and summary views

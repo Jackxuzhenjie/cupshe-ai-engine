@@ -33,6 +33,8 @@ import {
   MessageSquare,
   PlusCircle,
   Rss,
+  ClipboardList,
+  BarChart3,
 } from "lucide-react";
 
 interface NavItem {
@@ -92,6 +94,8 @@ const navGroups: NavGroup[] = [
       { path: "/department", iconEl: <Building2 size={20} />, zh: "部门中心", en: "Department" },
       { path: "/projects", iconEl: <FolderKanban size={20} />, zh: "项目中心", en: "Projects" },
       { path: "/org", iconEl: <Users size={20} />, zh: "组织架构", en: "Org Structure" },
+      { path: "/weekly-report", iconEl: <ClipboardList size={20} />, zh: "周报录入", en: "Weekly Report" },
+      { path: "/weekly-summary", iconEl: <BarChart3 size={20} />, zh: "周报汇总", en: "Report Summary" },
       { path: "/control-tower", iconEl: <Gauge size={20} />, zh: "指挥塔", en: "Control Tower" },
       { path: "/feishu", iconEl: <MessageSquare size={20} />, zh: "飞书集成", en: "Feishu" },
       { path: "/admin", iconEl: <Settings size={20} />, zh: "管理后台", en: "Admin" },

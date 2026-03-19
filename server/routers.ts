@@ -229,6 +229,91 @@ export const appRouter = router({
       }),
   }),
 
+  // ========== WEEKLY REPORTS ==========
+  weeklyReports: router({
+    list: publicProcedure
+      .input(z.object({
+        weekId: z.string().optional(),
+        centerId: z.string().optional(),
+        status: z.string().optional(),
+        limit: z.number().optional(),
+        offset: z.number().optional(),
+      }).optional())
+      .query(async ({ input }) => {
+        return db.listWeeklyReports(input ?? undefined);
+      }),
+
+    get: publicProcedure
+      .input(z.object({ id: z.number() }))
+      .query(async ({ input }) => {
+        return db.getWeeklyReport(input.id);
+      }),
+
+    getByWeekAndCenter: publicProcedure
+      .input(z.object({ weekId: z.string(), centerId: z.string() }))
+      .query(async ({ input }) => {
+        return db.getWeeklyReportByWeekAndCenter(input.weekId, input.centerId);
+      }),
+
+    summary: publicProcedure
+      .input(z.object({ weekId: z.string() }))
+      .query(async ({ input }) => {
+        return db.getWeeklyReportSummary(input.weekId);
+      }),
+
+    availableWeeks: publicProcedure.query(async () => {
+      return db.getAvailableWeeks();
+    }),
+
+    upsert: protectedProcedure
+      .input(z.object({
+        weekId: z.string(),
+        centerId: z.string(),
+        centerName: z.string(),
+        centerNameEn: z.string().optional(),
+        status: z.enum(["red", "yellow", "green"]),
+        progressPercent: z.number().min(0).max(100).optional(),
+        maturityLevel: z.enum(["L1", "L2", "L3", "L4", "L5"]).optional(),
+        progressItems: z.string().optional(),
+        issues: z.string().optional(),
+        nextWeekPlans: z.string().optional(),
+        highlights: z.string().optional(),
+        activeAiUsers: z.number().optional(),
+        newCasesCount: z.number().optional(),
+        skillsUnlocked: z.number().optional(),
+        isPilot: z.boolean().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        await db.upsertWeeklyReport({
+          ...input,
+          submittedBy: ctx.user.id,
+          submitterName: ctx.user.name ?? "PMO",
+        });
+        return { success: true };
+      }),
+
+    delete: adminProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input }) => {
+        await db.deleteWeeklyReport(input.id);
+        return { success: true };
+      }),
+
+    ceoReview: adminProcedure
+      .input(z.object({
+        id: z.number(),
+        ceoReviewNote: z.string().optional(),
+        ceoReviewed: z.boolean(),
+      }))
+      .mutation(async ({ input }) => {
+        await db.updateWeeklyReport(input.id, {
+          ceoReviewNote: input.ceoReviewNote,
+          ceoReviewed: input.ceoReviewed,
+        });
+        return { success: true };
+      }),
+  }),
+
   // ========== FEISHU CONFIG ==========
   feishu: router({
     getConfig: adminProcedure.query(async () => {

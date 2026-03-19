@@ -26,6 +26,8 @@ import ProjectCenter from "./pages/ProjectCenter";
 import OrgStructure from "./pages/OrgStructure";
 import FeishuSettings from "./pages/FeishuSettings";
 import GlobalIntelligence from "./pages/GlobalIntelligence";
+import WeeklyReport from "./pages/WeeklyReport";
+import WeeklyReportSummary from "./pages/WeeklyReportSummary";
 import NotFound from "./pages/NotFound";
 
 function Router() {
@@ -51,6 +53,8 @@ function Router() {
         <Route path="/org" component={OrgStructure} />
         <Route path="/intelligence" component={GlobalIntelligence} />
         <Route path="/feishu" component={FeishuSettings} />
+        <Route path="/weekly-report" component={WeeklyReport} />
+        <Route path="/weekly-summary" component={WeeklyReportSummary} />
         <Route path="/control-tower" component={ControlTower} />
         <Route path="/admin" component={Admin} />
         <Route path="/404" component={NotFound} />

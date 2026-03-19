@@ -140,3 +140,49 @@ export const feishuConfig = mysqlTable("feishu_config", {
 
 export type FeishuConfig = typeof feishuConfig.$inferSelect;
 export type InsertFeishuConfig = typeof feishuConfig.$inferInsert;
+
+/**
+ * Weekly Reports — PMO Claire's red/yellow/green status tracking per center
+ */
+export const weeklyReports = mysqlTable("weekly_reports", {
+  id: int("id").autoincrement().primaryKey(),
+  /** Week identifier: e.g. "2026-W12" */
+  weekId: varchar("weekId", { length: 16 }).notNull(),
+  /** Which center/department this report is for */
+  centerId: varchar("centerId", { length: 64 }).notNull(),
+  centerName: varchar("centerName", { length: 255 }).notNull(),
+  centerNameEn: varchar("centerNameEn", { length: 255 }),
+  /** Red / Yellow / Green status */
+  status: mysqlEnum("status", ["red", "yellow", "green"]).notNull(),
+  /** AI adoption progress percentage 0-100 */
+  progressPercent: int("progressPercent").default(0),
+  /** Current maturity level */
+  maturityLevel: mysqlEnum("maturityLevel", ["L1", "L2", "L3", "L4", "L5"]).default("L1"),
+  /** Key progress items this week */
+  progressItems: text("progressItems"),
+  /** Issues and blockers */
+  issues: text("issues"),
+  /** Plans for next week */
+  nextWeekPlans: text("nextWeekPlans"),
+  /** Highlights / wins */
+  highlights: text("highlights"),
+  /** Number of active AI users in this center */
+  activeAiUsers: int("activeAiUsers").default(0),
+  /** Number of new cases submitted */
+  newCasesCount: int("newCasesCount").default(0),
+  /** Number of skills unlocked */
+  skillsUnlocked: int("skillsUnlocked").default(0),
+  /** Is this a pilot center? */
+  isPilot: boolean("isPilot").default(false),
+  /** Submitted by (PMO user id) */
+  submittedBy: int("submittedBy"),
+  submitterName: varchar("submitterName", { length: 255 }),
+  /** CEO review note */
+  ceoReviewNote: text("ceoReviewNote"),
+  ceoReviewed: boolean("ceoReviewed").default(false),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type WeeklyReport = typeof weeklyReports.$inferSelect;
+export type InsertWeeklyReport = typeof weeklyReports.$inferInsert;
