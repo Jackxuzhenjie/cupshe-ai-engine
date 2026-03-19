@@ -108,3 +108,12 @@
 - [x] Add knowledge deposit links (case library, prompt library, workflow library)
 - [x] Redesign SkillTree UI with expandable skill detail panels
 - [x] Show knowledge deposit count and completion status per skill
+
+## Bug Fix & Knowledge Library Integration (March 2026)
+- [x] Fix SkillTree department drill-down not showing skills after clicking department (added auto-scroll)
+- [x] Verify all 14 departments show correct skills when selected
+- [x] Verify content completeness across all skill knowledge deposits
+- [x] Integrate skill Prompt templates into Prompt库 module (10→30 prompts)
+- [x] Integrate skill Workflow SOPs into 工作流库 module (5→11 workflows)
+- [x] Integrate skill-related Agents into Agent库 module (6→12 agents)
+- [x] Ensure cross-module navigation between SkillTree and knowledge libraries

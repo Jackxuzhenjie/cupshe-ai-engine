@@ -6,7 +6,7 @@
  * - Learning resources, Prompt templates, Workflow SOPs, Practice tasks, Cases
  * - Covers CUPSHE full value chain × 14 departments × 3 pilot projects × 4 layers
  */
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -58,6 +58,7 @@ export default function SkillTree() {
   const [expandedSkill, setExpandedSkill] = useState<string | null>(null);
   const [activeKnowledgeTab, setActiveKnowledgeTab] = useState<KnowledgeTab>("resources");
   const [copiedPrompt, setCopiedPrompt] = useState<string | null>(null);
+  const skillsListRef = useRef<HTMLDivElement>(null);
 
   const stats = useMemo(() => {
     const total = skillNodes.length;
@@ -236,7 +237,11 @@ export default function SkillTree() {
                 return (
                   <button
                     key={key}
-                    onClick={() => { setSelectedDept(key); setExpandedSkill(null); }}
+                    onClick={() => {
+                      setSelectedDept(key);
+                      setExpandedSkill(null);
+                      setTimeout(() => skillsListRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+                    }}
                     className={`flex flex-col items-center gap-1 p-3 rounded-xl border text-center transition-all ${
                       selectedDept === key ? "border-primary bg-primary/5 shadow-sm" : "border-transparent bg-muted/30 hover:bg-muted/60"
                     }`}
@@ -281,6 +286,7 @@ export default function SkillTree() {
       </motion.div>
 
       {/* Skill Cards — Grouped by Layer */}
+      <div ref={skillsListRef} />
       <AnimatePresence mode="wait">
         <motion.div
           key={`${viewMode}-${selectedDept}-${selectedProject}-${searchQuery}`}
