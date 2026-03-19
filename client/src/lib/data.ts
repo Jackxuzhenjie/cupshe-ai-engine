@@ -17,14 +17,20 @@ export const kpiData = {
 
 // --- Departments ---
 export const departments = [
-  { id: "marketing", zh: "市场营销中心", en: "Marketing" },
-  { id: "creative", zh: "创意设计中心", en: "Creative Design" },
-  { id: "merchandising", zh: "商品企划中心", en: "Merchandising" },
-  { id: "operations", zh: "运营中心", en: "Operations" },
-  { id: "supply-chain", zh: "供应链中心", en: "Supply Chain" },
-  { id: "data", zh: "数据中心", en: "Data & Analytics" },
-  { id: "it", zh: "IT技术中心", en: "IT & Technology" },
-  { id: "hr", zh: "人力资源中心", en: "Human Resources" },
+  { id: "marketing", zh: "营销中心", en: "Marketing Center" },
+  { id: "operations", zh: "运营中心", en: "Operation Center" },
+  { id: "multi-channel", zh: "多渠道事业部", en: "Multi Channel Business Dept." },
+  { id: "channel-dev", zh: "渠道拓展部", en: "Channel Development Dept." },
+  { id: "product", zh: "产品中心", en: "Product Center" },
+  { id: "creative", zh: "创意中心", en: "Creative Center" },
+  { id: "supply-chain", zh: "生产供应链中心", en: "Production & Supply Chain Center" },
+  { id: "logistics", zh: "仓储物流中心", en: "Warehousing & Logistics Center" },
+  { id: "it", zh: "互联网研发中心", en: "Internet R&D Center" },
+  { id: "finance", zh: "财务中心", en: "Finance Center" },
+  { id: "gm-office", zh: "总经办", en: "General Manager Office" },
+  { id: "hr", zh: "人力资源中心", en: "Human Resource Center" },
+  { id: "audit", zh: "审计监察部", en: "Audit & Supervision Dept." },
+  { id: "board-secretary", zh: "董秘办", en: "Board Secretary's Office" },
 ];
 
 // --- Newsletter Issues ---
@@ -1226,7 +1232,7 @@ export interface DepartmentCenter {
 export const departmentCenters: DepartmentCenter[] = [
   {
     id: "marketing",
-    zh: "市场营销中心",
+    zh: "营销中心",
     en: "Marketing Center",
     penetration: 75,
     efficiency: 38,
@@ -1251,8 +1257,8 @@ export const departmentCenters: DepartmentCenter[] = [
   },
   {
     id: "creative",
-    zh: "创意设计中心",
-    en: "Creative Design Center",
+    zh: "创意中心",
+    en: "Creative Center",
     penetration: 68,
     efficiency: 35,
     totalCases: 12,
@@ -1275,9 +1281,9 @@ export const departmentCenters: DepartmentCenter[] = [
     agents: 1,
   },
   {
-    id: "merchandising",
-    zh: "商品企划中心",
-    en: "Merchandising Center",
+    id: "product",
+    zh: "产品中心",
+    en: "Product Center",
     penetration: 62,
     efficiency: 28,
     totalCases: 9,
@@ -1302,7 +1308,7 @@ export const departmentCenters: DepartmentCenter[] = [
   {
     id: "operations",
     zh: "运营中心",
-    en: "Operations Center",
+    en: "Operation Center",
     penetration: 71,
     efficiency: 32,
     totalCases: 15,
@@ -1325,9 +1331,9 @@ export const departmentCenters: DepartmentCenter[] = [
     agents: 2,
   },
   {
-    id: "data",
-    zh: "数据中心",
-    en: "Data & Analytics Center",
+    id: "it-data",
+    zh: "互联网研发中心（数据）",
+    en: "Internet R&D (Data)",
     penetration: 92,
     efficiency: 48,
     totalCases: 22,
@@ -1351,8 +1357,8 @@ export const departmentCenters: DepartmentCenter[] = [
   },
   {
     id: "it",
-    zh: "IT技术中心",
-    en: "IT & Technology Center",
+    zh: "互联网研发中心",
+    en: "Internet R&D Center",
     penetration: 88,
     efficiency: 42,
     totalCases: 20,
@@ -1376,8 +1382,8 @@ export const departmentCenters: DepartmentCenter[] = [
   },
   {
     id: "supply-chain",
-    zh: "供应链中心",
-    en: "Supply Chain Center",
+    zh: "生产供应链中心",
+    en: "Production & Supply Chain Center",
     penetration: 55,
     efficiency: 22,
     totalCases: 6,
@@ -1402,7 +1408,7 @@ export const departmentCenters: DepartmentCenter[] = [
   {
     id: "hr",
     zh: "人力资源中心",
-    en: "Human Resources Center",
+    en: "Human Resource Center",
     penetration: 48,
     efficiency: 18,
     totalCases: 4,

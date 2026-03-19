@@ -60,7 +60,19 @@
 - [x] Verify all pages reflect updated strategy consistently
 
 ## New Executive PPT - AI Transformation Engine Introduction
-- [ ] Create new executive-facing PPT introducing the platform
-- [ ] Cover platform purpose, core modules, value proposition
-- [ ] Include governance structure and operational rhythm
-- [ ] Design for C-suite audience presentation
+- [x] Create new executive-facing PPT introducing the platform
+- [x] Cover platform purpose, core modules, value proposition
+- [x] Include governance structure and operational rhythm
+- [x] Design for C-suite audience presentation
+
+## Major Update - Project Center, Dept Names, Brand VI (March 2026)
+- [x] Add Project Center page (new module for AI pilot project tracking, supports L2/L3/L4 maturity)
+- [x] Add Project Center to sidebar navigation under Management group
+- [x] Add Project Center route in App.tsx
+- [x] Update all department names to match official org chart (14 first-level orgs)
+- [x] Update department data in data.ts with official names
+- [x] Update ControlTower maturity map with official department names
+- [x] Update Dashboard pilot project references
+- [x] Apply cupshe.com brand VI elements (warm coral accent, clean typography, warm whites)
+- [ ] Update executive PPT with Project Center module and new department names
+- [ ] Update executive PPT with brand VI alignment

@@ -29,6 +29,7 @@ import {
   Bot,
   Building2,
   Users,
+  FolderKanban,
   MessageSquare,
   PlusCircle,
   Rss,
@@ -89,6 +90,7 @@ const navGroups: NavGroup[] = [
     labelEn: "Management",
     items: [
       { path: "/department", iconEl: <Building2 size={20} />, zh: "部门中心", en: "Department" },
+      { path: "/projects", iconEl: <FolderKanban size={20} />, zh: "项目中心", en: "Projects" },
       { path: "/org", iconEl: <Users size={20} />, zh: "组织架构", en: "Org Structure" },
       { path: "/control-tower", iconEl: <Gauge size={20} />, zh: "指挥塔", en: "Control Tower" },
       { path: "/feishu", iconEl: <MessageSquare size={20} />, zh: "飞书集成", en: "Feishu" },
@@ -120,9 +122,11 @@ export default function AppLayout({ children }: { children: ReactNode }) {
       >
         {/* Logo area */}
         <div className="flex items-center gap-3 px-4 h-16 border-b border-sidebar-border shrink-0">
-          <div className="w-8 h-8 rounded-lg bg-sidebar-primary flex items-center justify-center shrink-0">
-            <Sparkles size={18} className="text-white" />
-          </div>
+          <img
+            src="https://d2xsxph8kpxj0f.cloudfront.net/310519663405149767/QM6nYWAxuWeZFy253dxUZB/cupshe_logo_d422ee59.png"
+            alt="CUPSHE"
+            className="w-8 h-8 rounded-lg object-contain bg-white shrink-0"
+          />
           {!collapsed && (
             <motion.div
               initial={{ opacity: 0 }}
@@ -202,9 +206,11 @@ export default function AppLayout({ children }: { children: ReactNode }) {
         {/* Mobile header */}
         <header className="lg:hidden flex items-center justify-between px-4 h-14 border-b border-border bg-card shrink-0">
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg bg-ocean flex items-center justify-center">
-              <Sparkles size={14} className="text-white" />
-            </div>
+            <img
+              src="https://d2xsxph8kpxj0f.cloudfront.net/310519663405149767/QM6nYWAxuWeZFy253dxUZB/cupshe_logo_d422ee59.png"
+              alt="CUPSHE"
+              className="w-7 h-7 rounded-lg object-contain bg-white"
+            />
             <span className="font-bold text-sm text-foreground">CUPSHE AI</span>
           </div>
           <div className="flex items-center gap-2">

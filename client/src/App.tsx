@@ -22,6 +22,7 @@ import PromptLibrary from "./pages/PromptLibrary";
 import WorkflowLibrary from "./pages/WorkflowLibrary";
 import AgentLibrary from "./pages/AgentLibrary";
 import DepartmentCenter from "./pages/DepartmentCenter";
+import ProjectCenter from "./pages/ProjectCenter";
 import OrgStructure from "./pages/OrgStructure";
 import FeishuSettings from "./pages/FeishuSettings";
 import GlobalIntelligence from "./pages/GlobalIntelligence";
@@ -46,6 +47,7 @@ function Router() {
         <Route path="/workflows" component={WorkflowLibrary} />
         <Route path="/agents" component={AgentLibrary} />
         <Route path="/department" component={DepartmentCenter} />
+        <Route path="/projects" component={ProjectCenter} />
         <Route path="/org" component={OrgStructure} />
         <Route path="/intelligence" component={GlobalIntelligence} />
         <Route path="/feishu" component={FeishuSettings} />

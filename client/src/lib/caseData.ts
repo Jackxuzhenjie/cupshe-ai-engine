@@ -719,14 +719,16 @@ export interface DeptMaturity {
 }
 
 export const departmentMaturityMap: DeptMaturity[] = [
-  { departmentZh: "数据中心", departmentEn: "Data & Analytics", level: "L4", score: 3.8, cases: 22, topScenarioZh: "数据报表", topScenarioEn: "Data Reporting" },
-  { departmentZh: "IT技术中心", departmentEn: "IT & Technology", level: "L3", score: 3.5, cases: 20, topScenarioZh: "自动化开发", topScenarioEn: "Automation Dev" },
-  { departmentZh: "市场营销中心", departmentEn: "Marketing", level: "L3", score: 3.2, cases: 18, topScenarioZh: "广告创意", topScenarioEn: "Ad Creative" },
-  { departmentZh: "运营中心", departmentEn: "Operations", level: "L3", score: 3.0, cases: 15, topScenarioZh: "客服", topScenarioEn: "Customer Service" },
-  { departmentZh: "创意设计中心", departmentEn: "Creative Design", level: "L2", score: 2.6, cases: 12, topScenarioZh: "设计概念", topScenarioEn: "Design Concept" },
-  { departmentZh: "商品企划中心", departmentEn: "Merchandising", level: "L2", score: 2.4, cases: 9, topScenarioZh: "商品分析", topScenarioEn: "Product Analysis" },
-  { departmentZh: "供应链中心", departmentEn: "Supply Chain", level: "L1", score: 1.8, cases: 6, topScenarioZh: "需求预测", topScenarioEn: "Demand Forecast" },
-  { departmentZh: "人力资源中心", departmentEn: "Human Resources", level: "L1", score: 1.4, cases: 4, topScenarioZh: "招聘筛选", topScenarioEn: "Recruitment Screening" },
+  { departmentZh: "互联网研发中心", departmentEn: "Internet R&D Center", level: "L4", score: 3.8, cases: 42, topScenarioZh: "数据报表/自动化开发", topScenarioEn: "Data Reporting / Automation Dev" },
+  { departmentZh: "营销中心", departmentEn: "Marketing Center", level: "L3", score: 3.2, cases: 18, topScenarioZh: "广告创意", topScenarioEn: "Ad Creative" },
+  { departmentZh: "运营中心", departmentEn: "Operation Center", level: "L3", score: 3.0, cases: 15, topScenarioZh: "客服", topScenarioEn: "Customer Service" },
+  { departmentZh: "创意中心", departmentEn: "Creative Center", level: "L2", score: 2.6, cases: 12, topScenarioZh: "设计概念", topScenarioEn: "Design Concept" },
+  { departmentZh: "产品中心", departmentEn: "Product Center", level: "L2", score: 2.4, cases: 9, topScenarioZh: "商品分析", topScenarioEn: "Product Analysis" },
+  { departmentZh: "生产供应链中心", departmentEn: "Production & Supply Chain", level: "L1", score: 1.8, cases: 6, topScenarioZh: "需求预测", topScenarioEn: "Demand Forecast" },
+  { departmentZh: "人力资源中心", departmentEn: "Human Resource Center", level: "L1", score: 1.4, cases: 4, topScenarioZh: "招聘筛选", topScenarioEn: "Recruitment Screening" },
+  { departmentZh: "财务中心", departmentEn: "Finance Center", level: "L1", score: 1.2, cases: 2, topScenarioZh: "财务报表", topScenarioEn: "Financial Reporting" },
+  { departmentZh: "仓储物流中心", departmentEn: "Warehousing & Logistics", level: "L1", score: 1.1, cases: 2, topScenarioZh: "路线优化", topScenarioEn: "Route Optimization" },
+  { departmentZh: "多渠道事业部", departmentEn: "Multi Channel Business", level: "L2", score: 2.0, cases: 5, topScenarioZh: "渠道分析", topScenarioEn: "Channel Analysis" },
 ];
 
 // --- AI Transformation Dashboard (for CEO) ---
@@ -740,6 +742,6 @@ export const aiTransformationDashboard = {
   caseOfMonthId: "case-001",
   weeklyNewCases: 5,
   monthlyNewCases: 18,
-  topDepartmentZh: "数据中心",
-  topDepartmentEn: "Data & Analytics",
+  topDepartmentZh: "互联网研发中心",
+  topDepartmentEn: "Internet R&D Center",
 };
