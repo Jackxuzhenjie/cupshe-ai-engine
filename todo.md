@@ -97,3 +97,14 @@
 - [x] Implement enriched skill tree data structure
 - [x] Redesign SkillTree UI with user-centric navigation (filter by dept, project, level)
 - [x] Ensure coverage of full cross-border e-commerce value chain scenarios
+
+## Skill Tree Granularity Enrichment (March 2026)
+- [x] Extend SkillNode data structure with knowledge deposits (resources, prompts, workflows, cases, tasks)
+- [x] Add learning resources (tutorials, videos, guides) to each skill
+- [x] Add best practice Prompt templates for each skill
+- [x] Add workflow templates and SOP references
+- [x] Add prerequisite skill dependencies for learning paths
+- [x] Add practice tasks with acceptance criteria
+- [x] Add knowledge deposit links (case library, prompt library, workflow library)
+- [x] Redesign SkillTree UI with expandable skill detail panels
+- [x] Show knowledge deposit count and completion status per skill
