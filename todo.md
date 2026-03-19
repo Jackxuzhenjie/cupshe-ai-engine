@@ -82,4 +82,7 @@
 - [x] Update AI BP role definition: tech support (技术问题、AI账号等)
 - [x] Update AI科代表 definition: center AI practice pioneer, sub-project lead, evangelist
 - [x] Update HRBP definition: HR function landing, center AI project operations
-- [ ] Update PPT governance/org slides with new role definitions
+- [x] Update PPT governance/org slides with new role definitions
+
+## Brand Logo Update (March 2026)
+- [x] Replace sidebar logo with official CUPSHE text logo

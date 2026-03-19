@@ -123,9 +123,9 @@ export default function AppLayout({ children }: { children: ReactNode }) {
         {/* Logo area */}
         <div className="flex items-center gap-3 px-4 h-16 border-b border-sidebar-border shrink-0">
           <img
-            src="https://d2xsxph8kpxj0f.cloudfront.net/310519663405149767/QM6nYWAxuWeZFy253dxUZB/cupshe_logo_d422ee59.png"
+            src="https://d2xsxph8kpxj0f.cloudfront.net/310519663405149767/QM6nYWAxuWeZFy253dxUZB/cupshe_text_logo_1a62b772.png"
             alt="CUPSHE"
-            className="w-8 h-8 rounded-lg object-contain bg-white shrink-0"
+            className="h-6 object-contain brightness-0 invert shrink-0"
           />
           {!collapsed && (
             <motion.div
@@ -133,11 +133,8 @@ export default function AppLayout({ children }: { children: ReactNode }) {
               animate={{ opacity: 1 }}
               className="overflow-hidden"
             >
-              <h1 className="text-sm font-bold leading-tight text-sidebar-foreground whitespace-nowrap">
-                CUPSHE AI
-              </h1>
-              <p className="text-[10px] text-sidebar-foreground/60 whitespace-nowrap">
-                Transformation Engine
+              <p className="text-[11px] font-medium text-sidebar-foreground/70 whitespace-nowrap tracking-wide">
+                AI Transformation Engine
               </p>
             </motion.div>
           )}
@@ -207,9 +204,9 @@ export default function AppLayout({ children }: { children: ReactNode }) {
         <header className="lg:hidden flex items-center justify-between px-4 h-14 border-b border-border bg-card shrink-0">
           <div className="flex items-center gap-2">
             <img
-              src="https://d2xsxph8kpxj0f.cloudfront.net/310519663405149767/QM6nYWAxuWeZFy253dxUZB/cupshe_logo_d422ee59.png"
+              src="https://d2xsxph8kpxj0f.cloudfront.net/310519663405149767/QM6nYWAxuWeZFy253dxUZB/cupshe_text_logo_1a62b772.png"
               alt="CUPSHE"
-              className="w-7 h-7 rounded-lg object-contain bg-white"
+              className="h-5 object-contain"
             />
             <span className="font-bold text-sm text-foreground">CUPSHE AI</span>
           </div>
