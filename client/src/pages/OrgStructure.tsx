@@ -14,13 +14,19 @@ import {
 // Seed departments for initial display when DB is empty
 const SEED_DEPARTMENTS = [
   { id: 1, name: "营销中心", nameEn: "Marketing Center", parentId: null, memberCount: 45, aiPenetration: 72, sortOrder: 1 },
-  { id: 2, name: "创意中心", nameEn: "Creative Center", parentId: null, memberCount: 32, aiPenetration: 81, sortOrder: 2 },
-  { id: 3, name: "商品中心", nameEn: "Product Center", parentId: null, memberCount: 38, aiPenetration: 63, sortOrder: 3 },
-  { id: 4, name: "运营中心", nameEn: "Operations Center", parentId: null, memberCount: 28, aiPenetration: 55, sortOrder: 4 },
-  { id: 5, name: "数据中心", nameEn: "Data Center", parentId: null, memberCount: 15, aiPenetration: 89, sortOrder: 5 },
-  { id: 6, name: "供应链中心", nameEn: "Supply Chain Center", parentId: null, memberCount: 22, aiPenetration: 42, sortOrder: 6 },
-  { id: 7, name: "客服中心", nameEn: "Customer Service Center", parentId: null, memberCount: 35, aiPenetration: 68, sortOrder: 7 },
-  { id: 8, name: "技术中心", nameEn: "Technology Center", parentId: null, memberCount: 20, aiPenetration: 95, sortOrder: 8 },
+  { id: 2, name: "运营中心", nameEn: "Operations Center", parentId: null, memberCount: 28, aiPenetration: 55, sortOrder: 2 },
+  { id: 3, name: "产品中心", nameEn: "Product Center", parentId: null, memberCount: 38, aiPenetration: 63, sortOrder: 3 },
+  { id: 4, name: "创意中心", nameEn: "Creative Center", parentId: null, memberCount: 32, aiPenetration: 81, sortOrder: 4 },
+  { id: 5, name: "互联网研发中心", nameEn: "Internet R&D Center", parentId: null, memberCount: 20, aiPenetration: 95, sortOrder: 5 },
+  { id: 6, name: "生产供应链中心", nameEn: "Production & Supply Chain Center", parentId: null, memberCount: 22, aiPenetration: 42, sortOrder: 6 },
+  { id: 7, name: "仓储物流中心", nameEn: "Warehouse & Logistics Center", parentId: null, memberCount: 18, aiPenetration: 38, sortOrder: 7 },
+  { id: 8, name: "财务中心", nameEn: "Finance Center", parentId: null, memberCount: 15, aiPenetration: 52, sortOrder: 8 },
+  { id: 9, name: "人力资源中心", nameEn: "HR Center", parentId: null, memberCount: 12, aiPenetration: 48, sortOrder: 9 },
+  { id: 10, name: "多渠道事业部", nameEn: "Multi-Channel Business Unit", parentId: null, memberCount: 25, aiPenetration: 58, sortOrder: 10 },
+  { id: 11, name: "渠道拓展部", nameEn: "Channel Development Dept", parentId: null, memberCount: 10, aiPenetration: 45, sortOrder: 11 },
+  { id: 12, name: "总经办", nameEn: "General Manager Office", parentId: null, memberCount: 8, aiPenetration: 35, sortOrder: 12 },
+  { id: 13, name: "审计监察部", nameEn: "Audit & Supervision Dept", parentId: null, memberCount: 6, aiPenetration: 30, sortOrder: 13 },
+  { id: 14, name: "董秘办", nameEn: "Board Secretary Office", parentId: null, memberCount: 5, aiPenetration: 25, sortOrder: 14 },
 ];
 
 // Seed users for display
@@ -67,7 +73,7 @@ export default function OrgStructure() {
     // Simulate Feishu sync
     await new Promise(resolve => setTimeout(resolve, 2000));
     setSyncing(false);
-    toast.success(t("组织架构同步完成！同步了8个部门，156名员工", "Org sync completed! Synced 8 departments, 156 employees"));
+    toast.success(t("组织架构同步完成！同步了14个一级组织，304名员工", "Org sync completed! Synced 14 first-level orgs, 304 employees"));
   };
 
   const toggleDept = (id: number) => {

@@ -17,7 +17,9 @@ const item = { hidden: { opacity: 0, y: 12 }, show: { opacity: 1, y: 0 } };
 
 const roles = [
   { id: "employee", zh: "普通员工", en: "Employee", permissions: "查看、投票、提交" },
-  { id: "champion", zh: "AI Champion", en: "AI Champion", permissions: "查看、投票、提交、审核" },
+  { id: "ai_rep", zh: "AI科代表", en: "AI Representative", permissions: "查看、投票、提交、审核、子项目管理" },
+  { id: "ai_bp", zh: "AI BP", en: "AI BP", permissions: "查看、投票、提交、审核、技术支持" },
+  { id: "hrbp", zh: "HRBP", en: "HRBP", permissions: "查看、投票、提交、运营推动" },
   { id: "leader", zh: "中心负责人", en: "Center Leader", permissions: "查看、投票、提交、审核、管理本部门" },
   { id: "pmo", zh: "PMO", en: "PMO", permissions: "全部权限（除系统设置）" },
   { id: "admin", zh: "管理员", en: "Admin", permissions: "全部权限" },

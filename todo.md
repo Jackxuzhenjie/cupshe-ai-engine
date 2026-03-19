@@ -74,5 +74,12 @@
 - [x] Update ControlTower maturity map with official department names
 - [x] Update Dashboard pilot project references
 - [x] Apply cupshe.com brand VI elements (warm coral accent, clean typography, warm whites)
-- [ ] Update executive PPT with Project Center module and new department names
-- [ ] Update executive PPT with brand VI alignment
+- [x] Update executive PPT with Project Center module and new department names
+- [x] Update executive PPT with brand VI alignment
+
+## Role Definition Updates (March 2026)
+- [x] Rename AI Champion to AI科代表 across all platform code
+- [x] Update AI BP role definition: tech support (技术问题、AI账号等)
+- [x] Update AI科代表 definition: center AI practice pioneer, sub-project lead, evangelist
+- [x] Update HRBP definition: HR function landing, center AI project operations
+- [ ] Update PPT governance/org slides with new role definitions
