@@ -86,3 +86,4 @@
 
 ## Brand Logo Update (March 2026)
 - [x] Replace sidebar logo with official CUPSHE text logo
+- [x] Update sidebar logo to CUPSHE with palm tree icon

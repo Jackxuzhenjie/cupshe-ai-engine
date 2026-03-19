@@ -123,9 +123,9 @@ export default function AppLayout({ children }: { children: ReactNode }) {
         {/* Logo area */}
         <div className="flex items-center gap-3 px-4 h-16 border-b border-sidebar-border shrink-0">
           <img
-            src="https://d2xsxph8kpxj0f.cloudfront.net/310519663405149767/QM6nYWAxuWeZFy253dxUZB/cupshe_text_logo_1a62b772.png"
+            src="https://d2xsxph8kpxj0f.cloudfront.net/310519663405149767/QM6nYWAxuWeZFy253dxUZB/cupshe_palm_logo_1cd18f41.png"
             alt="CUPSHE"
-            className="h-6 object-contain brightness-0 invert shrink-0"
+            className="h-7 object-contain brightness-0 invert shrink-0"
           />
           {!collapsed && (
             <motion.div
@@ -204,9 +204,9 @@ export default function AppLayout({ children }: { children: ReactNode }) {
         <header className="lg:hidden flex items-center justify-between px-4 h-14 border-b border-border bg-card shrink-0">
           <div className="flex items-center gap-2">
             <img
-              src="https://d2xsxph8kpxj0f.cloudfront.net/310519663405149767/QM6nYWAxuWeZFy253dxUZB/cupshe_text_logo_1a62b772.png"
+              src="https://d2xsxph8kpxj0f.cloudfront.net/310519663405149767/QM6nYWAxuWeZFy253dxUZB/cupshe_palm_logo_1cd18f41.png"
               alt="CUPSHE"
-              className="h-5 object-contain"
+              className="h-6 object-contain"
             />
             <span className="font-bold text-sm text-foreground">CUPSHE AI</span>
           </div>
