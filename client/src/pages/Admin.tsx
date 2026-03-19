@@ -220,6 +220,69 @@ export default function Admin() {
 
           {/* Governance */}
           <TabsContent value="governance" className="mt-4">
+            {/* Project Leadership Team */}
+            <Card className="border-0 shadow-sm mb-4">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-base">{t("项目核心团队", "Project Leadership Team")}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                  {[
+                    { role: { zh: "CEO / 战略决策", en: "CEO / Strategy" }, name: "Mikezhao 赵黎明", duty: { zh: "资源决策、优先级裁决、施压推动", en: "Resource decisions, priority calls, push adoption" } },
+                    { role: { zh: "CTO / 项目PM", en: "CTO / Project PM" }, name: "Sammer 孔秋实", duty: { zh: "AI部署、方向目标、分享会组织", en: "AI deployment, direction goals, sharing sessions" } },
+                    { role: { zh: "CHRO / 人力统筹", en: "CHRO / HR Lead" }, name: "Jack Xu 许振杰", duty: { zh: "内部宣传、壁垒识别、人效目标、施压AI应用", en: "Promotion, barrier ID, efficiency targets, push AI" } },
+                    { role: { zh: "HRD / HR落地", en: "HRD / HR Execution" }, name: "Bran 陈光阳", duty: { zh: "业务部门配合、定向提升、宣传推动", en: "Dept coordination, targeted upskilling, promotion" } },
+                    { role: { zh: "PMO / 进度跟踪", en: "PMO / Progress" }, name: "Claire 王喆", duty: { zh: "周度红黄绿汇报、拉会协调、CEO汇报", en: "Weekly R/Y/G report, meeting coord, CEO briefing" } },
+                  ].map((person, i) => (
+                    <div key={i} className="p-3 rounded-xl border border-border/50 hover:border-primary/20 transition-colors">
+                      <div className="text-[10px] text-muted-foreground uppercase tracking-wider mb-1">{t(person.role.zh, person.role.en)}</div>
+                      <div className="text-sm font-bold text-foreground">{person.name}</div>
+                      <div className="text-[11px] text-muted-foreground mt-1">{t(person.duty.zh, person.duty.en)}</div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Governance Rhythm */}
+            <Card className="border-0 shadow-sm mb-4">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-base">{t("治理节奏", "Governance Rhythm")}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <div className="p-3 rounded-xl border border-coral/20 bg-coral/5">
+                    <div className="text-xs font-bold text-coral mb-1">{t("周度", "Weekly")}</div>
+                    <div className="text-[11px] text-foreground font-semibold">{t("红黄绿进度汇报", "R/Y/G Progress Report")}</div>
+                    <div className="text-[10px] text-muted-foreground mt-1">{t("Claire收集各部门AI关键进展，分红黄绿层级汇报CEO", "Claire collects dept AI progress, reports to CEO in R/Y/G tiers")}</div>
+                  </div>
+                  <div className="p-3 rounded-xl border border-teal/20 bg-teal/5">
+                    <div className="text-xs font-bold text-teal mb-1">{t("双周", "Bi-weekly")}</div>
+                    <div className="text-[11px] text-foreground font-semibold">{t("AI使用分享会 + 技能学习", "AI Sharing Session + Skill Learning")}</div>
+                    <div className="text-[10px] text-muted-foreground mt-1">{t("Sammer/Jack/Bran联合组织，促进探索与实践分享", "Sammer/Jack/Bran co-organize, promote exploration & sharing")}</div>
+                  </div>
+                  <div className="p-3 rounded-xl border border-primary/20 bg-primary/5">
+                    <div className="text-xs font-bold text-primary mb-1">{t("季度", "Quarterly")}</div>
+                    <div className="text-[11px] text-foreground font-semibold">{t("滚动迭代评估", "Rolling Iteration Review")}</div>
+                    <div className="text-[10px] text-muted-foreground mt-1">{t("各中心目标调整、壁垒识别、人效提升目标设定", "Center target adjustment, barrier ID, efficiency goal setting")}</div>
+                  </div>
+                </div>
+                <div className="mt-3 p-3 rounded-xl bg-warning/5 border border-warning/20">
+                  <div className="flex items-center gap-2">
+                    <Shield size={14} className="text-warning" />
+                    <span className="text-xs font-bold text-warning">{t("CEO指示", "CEO Directive")}</span>
+                  </div>
+                  <p className="text-[11px] text-muted-foreground mt-1">
+                    {t(
+                      "HR不止是内部宣传，还要给业务部门应用AI的压力，确保各部门能使用AI的环节都充分使用AI，识别和评估哪些部门有使用壁垒，定向提升，定人效提升目标。CTO/CHRO/HRD紧密协作。",
+                      "HR must not only promote but also pressure departments to adopt AI. Ensure all AI-applicable processes fully utilize AI. Identify and assess departments with adoption barriers for targeted improvement. Set efficiency targets. CTO/CHRO/HRD must collaborate closely."
+                    )}
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Governance Notices */}
             <Card className="border-0 shadow-sm">
               <CardHeader className="pb-2">
                 <CardTitle className="text-base">{t("治理公告", "Governance Notices")}</CardTitle>

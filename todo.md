@@ -117,3 +117,13 @@
 - [x] Integrate skill Workflow SOPs into 工作流库 module (5→11 workflows)
 - [x] Integrate skill-related Agents into Agent库 module (6→12 agents)
 - [x] Ensure cross-module navigation between SkillTree and knowledge libraries
+
+## Meeting Minutes Integration (March 2026)
+- [x] Add real personnel assignments to platform governance: CEO Mikezhao赵黎明, CTO Sammer孔秋实, CHRO Jack Xu许振杰, HRD Bran陈光阳, PMO Claire王喆
+- [x] Update ControlTower governance with weekly red/yellow/green progress reporting mechanism
+- [x] Add HR pressure mechanism: not just promotion but also pressure on departments to adopt AI
+- [x] Update timeline: March deployment, Q2 direction-setting goals
+- [x] Add regular AI sharing sessions to operational rhythm
+- [x] Update Dashboard with real project PM and stakeholder info
+- [ ] Update executive PPT governance slide with real personnel
+- [ ] Update role training PPT with real personnel assignments

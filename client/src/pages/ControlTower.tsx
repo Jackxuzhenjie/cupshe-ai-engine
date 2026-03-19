@@ -35,8 +35,8 @@ const timelinePhases = [
     statusEn: "In Progress",
     status: "current" as const,
     progress: 60,
-    milestonesZh: ["启动会已开", "PM已任命", "项目规划中"],
-    milestonesEn: ["Kickoff done", "PM appointed", "Planning"],
+    milestonesZh: ["启动会已开", "PM Sammer已任命", "Q2方向目标确定中"],
+    milestonesEn: ["Kickoff done", "PM Sammer appointed", "Q2 direction setting"],
   },
   {
     id: "month3",
@@ -48,8 +48,8 @@ const timelinePhases = [
     statusEn: "Upcoming",
     status: "upcoming" as const,
     progress: 0,
-    milestonesZh: ["平台搭建→试运行", "试点Phase 1", "Q2滚动迭代"],
-    milestonesEn: ["Platform build→trial", "Pilot Phase 1", "Q2 Rolling Iteration"],
+    milestonesZh: ["平台搭建→试运行", "试点Phase 1", "Q2方向性目标确定"],
+    milestonesEn: ["Platform build→trial", "Pilot Phase 1", "Q2 direction goals set"],
   },
   {
     id: "month6",
@@ -164,7 +164,7 @@ export default function ControlTower() {
             {t("AI 指挥塔", "AI Control Tower")}
           </h1>
           <p className="text-white/60 text-xs mt-1">
-            {t("管理层AI转型全局视图 · 目标：普通中心L2-L3 / 试点中心L3-L4", "Executive AI overview · Target: Regular Centers L2-L3 / Pilot Centers L3-L4")}
+            {t("PM: Sammer孔秋实 · 周度红黄绿汇报: Claire王喆 · 目标：普通L2-L3 / 试点L3-L4", "PM: Sammer · Weekly R/Y/G Report: Claire · Target: Regular L2-L3 / Pilot L3-L4")}
           </p>
         </div>
       </motion.div>

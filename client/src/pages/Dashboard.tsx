@@ -219,8 +219,8 @@ export default function Dashboard() {
           </h1>
           <p className="text-white/80 text-sm lg:text-base max-w-lg">
             {t(
-              "2026年3月 · 项目启动月 · 三大试点推进中 · 每周周报+双周技能学习",
-              "March 2026 · Launch Month · 3 Pilots In Progress · Weekly Report + Bi-weekly Skills"
+              "2026年3月 · PM: Sammer孔秋实 · 三大试点推进中 · 周度红黄绿汇报+双周技能学习",
+              "March 2026 · PM: Sammer · 3 Pilots In Progress · Weekly R/Y/G + Bi-weekly Skills"
             )}
           </p>
         </div>
