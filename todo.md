@@ -140,3 +140,26 @@
 - [x] Role-based access: PMO/Admin can edit, CEO/CTO can view summary
 - [x] Write vitest tests for weekly report procedures
 - [x] Mobile responsive design for both entry and summary views
+
+## Skill Tree Deep Audit & Granularity Completion (March 2026)
+- [x] Audit all skill nodes for complete knowledge deposits (resources, prompts, workflows, tasks, cases)
+- [x] Fix HR Center skills: ensure all HR skills have full Prompt templates, workflow SOPs, learning resources
+- [x] Fix all departments: ensure every skill has non-empty resources, prompts, workflows arrays
+- [x] Verify UI drill-down: clicking department → skills list → skill detail → knowledge deposits all work
+- [x] Ensure skill detail panel shows all tabs (Prompts, Workflows, Resources, Tasks, Cases) with real content
+- [x] Fix any truncation or rendering issues in skillTreeData.ts
+- [x] Verify readability of all skill descriptions and knowledge deposit content
+- [x] Test all 14 departments' skill expansion and content display
+
+## Case Showcase, Fission & Evaluation Model (March 2026)
+- [x] Add case submission Prompt template (company-level) to each skill node
+- [x] Enhance LinkedCase type with url, caseId, type (internal/industry/general), fissionFrom fields
+- [x] Design case fission mechanism: reference case by ID (e.g. CASE-MK-001), track cross-dept reuse
+- [x] Build case value evaluation model: original value, fission/reuse value (citation count, cross-dept reuse), quantified impact, voting popularity
+- [x] Add case showcase (通晒) and voting mechanism to platform
+- [x] Reflect full loop in keyTakeaways: 学习→实践→案例(Prompt+上传)→沉淀→通晒投票→裂变复用→价值评估→双周分享
+
+## Biweekly Skill Learning Plan (March 2026)
+- [x] Design biweekly learning schedule mapping skills across Q2-Q4 2026
+- [x] Create BiweeklyPlan data structure and page
+- [x] Integrate biweekly plan into platform navigation

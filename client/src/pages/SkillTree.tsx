@@ -17,12 +17,14 @@ import {
   GitBranch, Search, Building2, FolderKanban, Layers, GraduationCap,
   ChevronRight, ChevronDown, Sparkles, Target, Zap,
   BookOpen, FileText, MessageSquare, Workflow, ClipboardCheck,
-  ExternalLink, Clock, Copy, CheckCircle2, ArrowRight, Lightbulb, X
+  ExternalLink, Clock, Copy, CheckCircle2, ArrowRight, Lightbulb, X,
+  Link2, Award, ThumbsUp, Share2, Tag
 } from "lucide-react";
 import {
-  skillNodes, layerConfig, pilotProjectConfig, departmentSkillMap,
+  skillNodes, layerConfig, pilotProjectConfig, departmentSkillMap, caseValueModel,
   type SkillNode, type SkillLayer, type PilotProject,
   type LearningResource, type PromptTemplate, type WorkflowSOP, type PracticeTask,
+  type LinkedCase, type CaseType,
 } from "@/lib/skillTreeData";
 
 const container = { hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.05 } } };
@@ -567,20 +569,54 @@ function SkillCardWithKnowledge({
 
                   {/* Cases Tab */}
                   {activeTab === "cases" && (
-                    <div className="space-y-2">
+                    <div className="space-y-3">
+                      {/* Case Submission Prompt */}
+                      {k.caseSubmissionPrompt && (
+                        <div className="p-3 bg-violet-50/50 rounded-lg border border-violet-100">
+                          <div className="flex items-center justify-between mb-2">
+                            <div className="flex items-center gap-1.5">
+                              <Tag size={12} className="text-violet-600" />
+                              <span className="text-[11px] font-semibold text-violet-800">{t("案例提交Prompt", "Case Submission Prompt")}</span>
+                            </div>
+                            <button
+                              onClick={() => onCopyPrompt(k.caseSubmissionPrompt || "", `${skill.id}-case-submit`)}
+                              className={`flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-medium transition-all ${
+                                copiedPrompt === `${skill.id}-case-submit` ? "bg-green-100 text-green-700" : "bg-violet-100 hover:bg-violet-200 text-violet-700"
+                              }`}
+                            >
+                              {copiedPrompt === `${skill.id}-case-submit` ? <CheckCircle2 size={10} /> : <Copy size={10} />}
+                              {copiedPrompt === `${skill.id}-case-submit` ? t("已复制", "Copied") : t("复制", "Copy")}
+                            </button>
+                          </div>
+                          <pre className="text-[10px] text-violet-900/70 whitespace-pre-wrap font-mono leading-relaxed max-h-[120px] overflow-y-auto">
+                            {k.caseSubmissionPrompt}
+                          </pre>
+                        </div>
+                      )}
+
+                      {/* Case Value Evaluation Model */}
+                      <div className="p-3 bg-amber-50/30 rounded-lg border border-amber-100/50">
+                        <div className="flex items-center gap-1.5 mb-2">
+                          <Award size={12} className="text-amber-600" />
+                          <span className="text-[11px] font-semibold text-amber-800">{t("案例价值评估模型", "Case Value Evaluation")}</span>
+                        </div>
+                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                          {caseValueModel.dimensions.map(dim => (
+                            <div key={dim.id} className="text-center p-1.5 bg-white/60 rounded">
+                              <div className="text-[10px] font-semibold text-foreground">{dim.name}</div>
+                              <div className="text-[9px] text-muted-foreground">{t("权重", "Weight")}: {dim.weight}%</div>
+                            </div>
+                          ))}
+                        </div>
+                        <p className="text-[9px] text-amber-700 mt-2">{t("裂变加分", "Fission Bonus")}: {caseValueModel.fissionBonus}</p>
+                      </div>
+
+                      {/* Case List */}
                       {k.cases.length === 0 ? (
                         <EmptyState text={t("暂无关联案例，持续沉淀中", "No cases yet, accumulating...")} />
                       ) : (
                         k.cases.map((c, i) => (
-                          <div key={i} className="p-3 bg-muted/30 rounded-lg">
-                            <div className="flex items-center gap-2 mb-1">
-                              <Lightbulb size={12} className="text-amber-500" />
-                              <span className="text-[12px] font-semibold">{c.title}</span>
-                              <Badge variant="secondary" className="text-[8px]">{c.department}</Badge>
-                            </div>
-                            <p className="text-[11px] text-muted-foreground mb-1">{c.summary}</p>
-                            <p className="text-[10px] text-green-600 font-medium">{t("影响", "Impact")}: {c.impact}</p>
-                          </div>
+                          <CaseCard key={i} caseItem={c} />
                         ))
                       )}
                     </div>
@@ -764,6 +800,83 @@ function TaskCard({ task }: { task: PracticeTask }) {
         <FileText size={10} />
         {t("交付物", "Deliverable")}: {task.deliverable}
       </div>
+    </div>
+  );
+}
+
+const caseTypeConfig: Record<CaseType, { zh: string; en: string; color: string; icon: React.ReactNode }> = {
+  internal: { zh: "内部实践", en: "Internal", color: "text-blue-700 bg-blue-50 border-blue-200", icon: <Building2 size={9} /> },
+  industry: { zh: "行业案例", en: "Industry", color: "text-purple-700 bg-purple-50 border-purple-200", icon: <Sparkles size={9} /> },
+  general: { zh: "通用参考", en: "General", color: "text-gray-700 bg-gray-50 border-gray-200", icon: <BookOpen size={9} /> },
+};
+
+function CaseCard({ caseItem }: { caseItem: LinkedCase }) {
+  const { t } = useLanguage();
+  const typeConf = caseTypeConfig[caseItem.type] || caseTypeConfig.general;
+  const fissionSource = caseItem.fissionFrom
+    ? skillNodes.flatMap(s => s.knowledge.cases).find(c => c.caseId === caseItem.fissionFrom)
+    : null;
+
+  return (
+    <div className="border border-border/40 rounded-lg overflow-hidden">
+      <div className="p-3">
+        {/* Header: caseId + type badge + department */}
+        <div className="flex items-center gap-2 mb-2 flex-wrap">
+          {caseItem.caseId && (
+            <span className="text-[9px] font-mono font-bold text-primary bg-primary/10 px-1.5 py-0.5 rounded">
+              {caseItem.caseId}
+            </span>
+          )}
+          <span className={`flex items-center gap-0.5 text-[9px] font-medium px-1.5 py-0.5 rounded border ${typeConf.color}`}>
+            {typeConf.icon}
+            {t(typeConf.zh, typeConf.en)}
+          </span>
+          <Badge variant="secondary" className="text-[8px]">{caseItem.department}</Badge>
+        </div>
+
+        {/* Title */}
+        <div className="flex items-center gap-1.5 mb-1.5">
+          <Lightbulb size={12} className="text-amber-500 shrink-0" />
+          <span className="text-[12px] font-semibold text-foreground">{caseItem.title}</span>
+        </div>
+
+        {/* Summary */}
+        <p className="text-[11px] text-muted-foreground mb-2 leading-relaxed">{caseItem.summary}</p>
+
+        {/* Impact */}
+        <div className="flex items-center gap-1.5 mb-2">
+          <ThumbsUp size={10} className="text-green-600 shrink-0" />
+          <p className="text-[10px] text-green-700 font-medium">{t("影响", "Impact")}: {caseItem.impact}</p>
+        </div>
+
+        {/* Fission Source */}
+        {caseItem.fissionFrom && (
+          <div className="flex items-center gap-1.5 p-2 bg-indigo-50/50 rounded border border-indigo-100">
+            <Share2 size={10} className="text-indigo-600 shrink-0" />
+            <span className="text-[10px] text-indigo-700">
+              {t("裂变自", "Fissioned from")}:{" "}
+              <span className="font-mono font-bold">{caseItem.fissionFrom}</span>
+              {fissionSource && (
+                <span className="text-indigo-500"> — {fissionSource.title}</span>
+              )}
+            </span>
+          </div>
+        )}
+      </div>
+
+      {/* Footer: URL link */}
+      {caseItem.url && caseItem.url !== "#" && (
+        <a
+          href={caseItem.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-1.5 px-3 py-2 bg-muted/20 border-t border-border/30 text-[10px] text-primary hover:bg-muted/40 transition-colors"
+        >
+          <ExternalLink size={10} />
+          {t("查看详情", "View Details")}
+          <span className="text-muted-foreground truncate flex-1 text-right">{caseItem.url}</span>
+        </a>
+      )}
     </div>
   );
 }

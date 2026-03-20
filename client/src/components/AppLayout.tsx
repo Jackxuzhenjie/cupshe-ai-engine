@@ -83,6 +83,7 @@ const navGroups: NavGroup[] = [
     labelEn: "Growth",
     items: [
       { path: "/skills", iconEl: <GitBranch size={20} />, zh: "技能树", en: "Skill Tree" },
+      { path: "/biweekly-plan", iconEl: <Sparkles size={20} />, zh: "双周计划", en: "Biweekly Plan" },
       { path: "/cases", iconEl: <BookOpen size={20} />, zh: "案例库", en: "Cases Library" },
       { path: "/leaderboard", iconEl: <Medal size={20} />, zh: "排行榜", en: "Leaderboard" },
     ],

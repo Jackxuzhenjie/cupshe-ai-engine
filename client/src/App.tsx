@@ -28,6 +28,7 @@ import FeishuSettings from "./pages/FeishuSettings";
 import GlobalIntelligence from "./pages/GlobalIntelligence";
 import WeeklyReport from "./pages/WeeklyReport";
 import WeeklyReportSummary from "./pages/WeeklyReportSummary";
+import BiweeklyPlan from "./pages/BiweeklyPlan";
 import NotFound from "./pages/NotFound";
 
 function Router() {
@@ -55,6 +56,7 @@ function Router() {
         <Route path="/feishu" component={FeishuSettings} />
         <Route path="/weekly-report" component={WeeklyReport} />
         <Route path="/weekly-summary" component={WeeklyReportSummary} />
+        <Route path="/biweekly-plan" component={BiweeklyPlan} />
         <Route path="/control-tower" component={ControlTower} />
         <Route path="/admin" component={Admin} />
         <Route path="/404" component={NotFound} />
