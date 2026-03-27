@@ -1,7 +1,7 @@
 import { eq, desc, asc, and, like, sql, inArray } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, departments, caseSubmissions, feishuConfig, weeklyReports } from "../drizzle/schema";
-import type { InsertDepartment, InsertCaseSubmission, InsertFeishuConfig, InsertWeeklyReport } from "../drizzle/schema";
+import { InsertUser, users, departments, caseSubmissions, feishuConfig, weeklyReports, userPoints, userActivities, userSkillProgress } from "../drizzle/schema";
+import type { InsertDepartment, InsertCaseSubmission, InsertFeishuConfig, InsertWeeklyReport, InsertUserActivity, InsertUserSkillProgress } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -346,3 +346,184 @@ export async function getAvailableWeeks() {
     .orderBy(desc(weeklyReports.weekId));
   return result.map(r => r.weekId);
 }
+
+// ========== USER POINTS QUERIES ==========
+
+/** Points awarded per activity type */
+const POINTS_MAP: Record<string, number> = {
+  case_upload: 50,
+  case_like: 5,
+  case_favorite: 10,
+  case_comment: 15,
+  skill_complete: 100,
+  skill_start: 10,
+  prompt_use: 8,
+  workflow_use: 8,
+  challenge_join: 20,
+  challenge_complete: 80,
+  wish_submit: 15,
+  bounty_claim: 60,
+  share: 10,
+  login: 2,
+  badge_earn: 30,
+};
+
+/** Level thresholds */
+const LEVEL_THRESHOLDS = [
+  { level: 1, min: 0, title: "AI新手" },
+  { level: 2, min: 100, title: "AI学徒" },
+  { level: 3, min: 300, title: "AI探索者" },
+  { level: 4, min: 600, title: "AI实践者" },
+  { level: 5, min: 1000, title: "AI能手" },
+  { level: 6, min: 1800, title: "AI达人" },
+  { level: 7, min: 3000, title: "AI先锋" },
+  { level: 8, min: 5000, title: "AI大师" },
+  { level: 9, min: 8000, title: "AI导师" },
+  { level: 10, min: 12000, title: "AI先知" },
+];
+
+function getLevelInfo(totalPoints: number) {
+  let result = LEVEL_THRESHOLDS[0];
+  for (const t of LEVEL_THRESHOLDS) {
+    if (totalPoints >= t.min) result = t;
+  }
+  const nextLevel = LEVEL_THRESHOLDS.find(t => t.min > totalPoints);
+  return { ...result, nextLevelMin: nextLevel?.min ?? result.min, nextLevelTitle: nextLevel?.title ?? result.title };
+}
+
+export async function getUserPoints(userId: number) {
+  const db = await getDb();
+  if (!db) return null;
+  const result = await db.select().from(userPoints).where(eq(userPoints.userId, userId)).limit(1);
+  if (result.length > 0) return result[0];
+  return null;
+}
+
+export async function ensureUserPoints(userId: number, userName?: string, departmentId?: number, departmentName?: string) {
+  const db = await getDb();
+  if (!db) return null;
+  let existing = await getUserPoints(userId);
+  if (!existing) {
+    await db.insert(userPoints).values({
+      userId,
+      userName: userName ?? null,
+      balance: 0,
+      totalEarned: 0,
+      level: 1,
+      levelTitle: "AI新手",
+      streakDays: 0,
+      longestStreak: 0,
+      badges: [],
+      departmentId: departmentId ?? null,
+      departmentName: departmentName ?? null,
+    });
+    existing = await getUserPoints(userId);
+  }
+  return existing;
+}
+
+export async function addPoints(userId: number, activityType: string, amount?: number) {
+  const db = await getDb();
+  if (!db) return;
+  const pts = amount ?? POINTS_MAP[activityType] ?? 0;
+  if (pts <= 0) return;
+  const current = await ensureUserPoints(userId);
+  if (!current) return;
+  const newTotal = current.totalEarned + pts;
+  const newBalance = current.balance + pts;
+  const levelInfo = getLevelInfo(newTotal);
+  await db.update(userPoints).set({
+    balance: newBalance,
+    totalEarned: newTotal,
+    level: levelInfo.level,
+    levelTitle: levelInfo.title,
+  }).where(eq(userPoints.userId, userId));
+}
+
+// ========== USER ACTIVITIES QUERIES ==========
+
+export async function recordActivity(data: InsertUserActivity) {
+  const db = await getDb();
+  if (!db) return;
+  const pts = POINTS_MAP[data.type] ?? 0;
+  await db.insert(userActivities).values({ ...data, pointsEarned: pts });
+  // Auto-add points
+  if (pts > 0) {
+    await addPoints(data.userId, data.type, pts);
+  }
+}
+
+export async function getUserActivities(userId: number, opts?: { limit?: number; offset?: number; type?: string }) {
+  const db = await getDb();
+  if (!db) return { activities: [], total: 0 };
+  const conditions = [eq(userActivities.userId, userId)];
+  if (opts?.type) conditions.push(eq(userActivities.type, opts.type as any));
+  const where = and(...conditions);
+  const limit = opts?.limit ?? 20;
+  const offset = opts?.offset ?? 0;
+
+  const [activitiesResult, countResult] = await Promise.all([
+    db.select().from(userActivities).where(where).orderBy(desc(userActivities.createdAt)).limit(limit).offset(offset),
+    db.select({ count: sql<number>`count(*)` }).from(userActivities).where(where),
+  ]);
+  return { activities: activitiesResult, total: countResult[0]?.count ?? 0 };
+}
+
+export async function getActivityStats(userId: number) {
+  const db = await getDb();
+  if (!db) return {};
+  const activities = await db.select().from(userActivities).where(eq(userActivities.userId, userId));
+  const stats: Record<string, number> = {};
+  for (const a of activities) {
+    stats[a.type] = (stats[a.type] ?? 0) + 1;
+  }
+  return stats;
+}
+
+// ========== USER SKILL PROGRESS QUERIES ==========
+
+export async function getUserSkillProgress(userId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(userSkillProgress).where(eq(userSkillProgress.userId, userId)).orderBy(desc(userSkillProgress.updatedAt));
+}
+
+export async function upsertSkillProgress(userId: number, data: { skillId: string; skillTitle?: string; status: "not_started" | "in_progress" | "completed"; progressPercent?: number; completedItems?: any }) {
+  const db = await getDb();
+  if (!db) return;
+  const existing = await db.select().from(userSkillProgress)
+    .where(and(eq(userSkillProgress.userId, userId), eq(userSkillProgress.skillId, data.skillId)))
+    .limit(1);
+  if (existing.length > 0) {
+    const updateData: any = { status: data.status, progressPercent: data.progressPercent ?? existing[0].progressPercent };
+    if (data.completedItems) updateData.completedItems = data.completedItems;
+    if (data.status === "in_progress" && !existing[0].startedAt) updateData.startedAt = new Date();
+    if (data.status === "completed") updateData.completedAt = new Date();
+    await db.update(userSkillProgress).set(updateData).where(eq(userSkillProgress.id, existing[0].id));
+  } else {
+    await db.insert(userSkillProgress).values({
+      userId,
+      skillId: data.skillId,
+      skillTitle: data.skillTitle,
+      status: data.status,
+      progressPercent: data.progressPercent ?? 0,
+      completedItems: data.completedItems,
+      startedAt: data.status !== "not_started" ? new Date() : undefined,
+      completedAt: data.status === "completed" ? new Date() : undefined,
+    });
+  }
+}
+
+export async function getSkillProgressStats(userId: number) {
+  const db = await getDb();
+  if (!db) return { total: 0, completed: 0, inProgress: 0, notStarted: 0 };
+  const progress = await getUserSkillProgress(userId);
+  return {
+    total: progress.length,
+    completed: progress.filter(p => p.status === "completed").length,
+    inProgress: progress.filter(p => p.status === "in_progress").length,
+    notStarted: progress.filter(p => p.status === "not_started").length,
+  };
+}
+
+export { POINTS_MAP, LEVEL_THRESHOLDS, getLevelInfo };

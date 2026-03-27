@@ -186,3 +186,94 @@ export const weeklyReports = mysqlTable("weekly_reports", {
 
 export type WeeklyReport = typeof weeklyReports.$inferSelect;
 export type InsertWeeklyReport = typeof weeklyReports.$inferInsert;
+
+/**
+ * User Points — gamification points balance and level tracking
+ */
+export const userPoints = mysqlTable("user_points", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  userName: varchar("userName", { length: 255 }),
+  /** Current points balance */
+  balance: int("balance").default(0).notNull(),
+  /** Total points ever earned */
+  totalEarned: int("totalEarned").default(0).notNull(),
+  /** Current level: 1-10 */
+  level: int("level").default(1).notNull(),
+  /** Level title */
+  levelTitle: varchar("levelTitle", { length: 64 }).default("AI新手"),
+  /** Streak days (consecutive active days) */
+  streakDays: int("streakDays").default(0),
+  /** Longest streak ever */
+  longestStreak: int("longestStreak").default(0),
+  /** Badges earned (JSON array of badge IDs) */
+  badges: json("badges").$type<string[]>(),
+  /** Department for leaderboard */
+  departmentId: int("departmentId"),
+  departmentName: varchar("departmentName", { length: 255 }),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type UserPoints = typeof userPoints.$inferSelect;
+export type InsertUserPoints = typeof userPoints.$inferInsert;
+
+/**
+ * User Activities — activity feed for case uploads, likes, favorites, shares, skill completions, etc.
+ */
+export const userActivities = mysqlTable("user_activities", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  userName: varchar("userName", { length: 255 }),
+  /** Activity type */
+  type: mysqlEnum("type", [
+    "case_upload", "case_like", "case_favorite", "case_comment",
+    "skill_complete", "skill_start", "prompt_use", "workflow_use",
+    "challenge_join", "challenge_complete", "wish_submit",
+    "bounty_claim", "share", "login", "badge_earn"
+  ]).notNull(),
+  /** Points earned for this activity */
+  pointsEarned: int("pointsEarned").default(0),
+  /** Reference ID (e.g., case ID, skill ID) */
+  refId: varchar("refId", { length: 128 }),
+  /** Reference title for display */
+  refTitle: varchar("refTitle", { length: 500 }),
+  /** Additional metadata (JSON) */
+  metadata: json("metadata").$type<Record<string, any>>(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type UserActivity = typeof userActivities.$inferSelect;
+export type InsertUserActivity = typeof userActivities.$inferInsert;
+
+/**
+ * User Skill Progress — tracks individual skill completion status
+ */
+export const userSkillProgress = mysqlTable("user_skill_progress", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  /** Skill node ID from skillTreeData */
+  skillId: varchar("skillId", { length: 64 }).notNull(),
+  skillTitle: varchar("skillTitle", { length: 255 }),
+  /** Status: not_started, in_progress, completed */
+  status: mysqlEnum("status", ["not_started", "in_progress", "completed"]).default("not_started").notNull(),
+  /** Progress percentage 0-100 */
+  progressPercent: int("progressPercent").default(0),
+  /** Completed sub-items (JSON: which resources/prompts/tasks done) */
+  completedItems: json("completedItems").$type<{
+    resources?: string[];
+    prompts?: string[];
+    workflows?: string[];
+    tasks?: string[];
+    cases?: string[];
+  }>(),
+  /** Started at */
+  startedAt: timestamp("startedAt"),
+  /** Completed at */
+  completedAt: timestamp("completedAt"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type UserSkillProgress = typeof userSkillProgress.$inferSelect;
+export type InsertUserSkillProgress = typeof userSkillProgress.$inferInsert;

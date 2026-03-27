@@ -29,6 +29,7 @@ import GlobalIntelligence from "./pages/GlobalIntelligence";
 import WeeklyReport from "./pages/WeeklyReport";
 import WeeklyReportSummary from "./pages/WeeklyReportSummary";
 import BiweeklyPlan from "./pages/BiweeklyPlan";
+import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 
 function Router() {
@@ -36,6 +37,7 @@ function Router() {
     <AppLayout>
       <Switch>
         <Route path="/" component={Dashboard} />
+        <Route path="/profile" component={Profile} />
         <Route path="/newsletter" component={Newsletter} />
         <Route path="/newsletter/:id" component={NewsletterDetail} />
         <Route path="/wishes" component={WishPool} />

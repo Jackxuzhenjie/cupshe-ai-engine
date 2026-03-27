@@ -35,6 +35,7 @@ import {
   Rss,
   ClipboardList,
   BarChart3,
+  UserCircle,
 } from "lucide-react";
 
 interface NavItem {
@@ -51,6 +52,13 @@ interface NavGroup {
 }
 
 const navGroups: NavGroup[] = [
+  {
+    labelZh: "我的",
+    labelEn: "Me",
+    items: [
+      { path: "/profile", iconEl: <UserCircle size={20} />, zh: "个人主页", en: "My Profile" },
+    ],
+  },
   {
     labelZh: "核心",
     labelEn: "Core",

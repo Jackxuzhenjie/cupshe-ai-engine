@@ -314,6 +314,104 @@ export const appRouter = router({
       }),
   }),
 
+  // ========== USER PROFILE ==========
+  profile: router({
+    /** Get current user's points and level */
+    getPoints: protectedProcedure.query(async ({ ctx }) => {
+      const points = await db.ensureUserPoints(ctx.user.id, ctx.user.name ?? undefined);
+      const levelInfo = db.getLevelInfo(points?.totalEarned ?? 0);
+      return { points, levelInfo };
+    }),
+
+    /** Get current user's activity feed */
+    getActivities: protectedProcedure
+      .input(z.object({
+        limit: z.number().optional(),
+        offset: z.number().optional(),
+        type: z.string().optional(),
+      }).optional())
+      .query(async ({ ctx, input }) => {
+        return db.getUserActivities(ctx.user.id, input ?? undefined);
+      }),
+
+    /** Get activity stats (counts by type) */
+    getActivityStats: protectedProcedure.query(async ({ ctx }) => {
+      return db.getActivityStats(ctx.user.id);
+    }),
+
+    /** Get skill progress for current user */
+    getSkillProgress: protectedProcedure.query(async ({ ctx }) => {
+      return db.getUserSkillProgress(ctx.user.id);
+    }),
+
+    /** Get skill progress stats (completed/in-progress/not-started counts) */
+    getSkillStats: protectedProcedure.query(async ({ ctx }) => {
+      return db.getSkillProgressStats(ctx.user.id);
+    }),
+
+    /** Record an activity (auto-awards points) */
+    recordActivity: protectedProcedure
+      .input(z.object({
+        type: z.enum([
+          "case_upload", "case_like", "case_favorite", "case_comment",
+          "skill_complete", "skill_start", "prompt_use", "workflow_use",
+          "challenge_join", "challenge_complete", "wish_submit",
+          "bounty_claim", "share", "login", "badge_earn"
+        ]),
+        refId: z.string().optional(),
+        refTitle: z.string().optional(),
+        metadata: z.record(z.string(), z.any()).optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        await db.recordActivity({
+          userId: ctx.user.id,
+          userName: ctx.user.name ?? "Unknown",
+          type: input.type,
+          refId: input.refId,
+          refTitle: input.refTitle,
+          metadata: input.metadata,
+        });
+        return { success: true };
+      }),
+
+    /** Update skill progress */
+    updateSkillProgress: protectedProcedure
+      .input(z.object({
+        skillId: z.string(),
+        skillTitle: z.string().optional(),
+        status: z.enum(["not_started", "in_progress", "completed"]),
+        progressPercent: z.number().min(0).max(100).optional(),
+        completedItems: z.any().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        await db.upsertSkillProgress(ctx.user.id, input);
+        // If completing a skill, also record activity
+        if (input.status === "completed") {
+          await db.recordActivity({
+            userId: ctx.user.id,
+            userName: ctx.user.name ?? "Unknown",
+            type: "skill_complete",
+            refId: input.skillId,
+            refTitle: input.skillTitle,
+          });
+        } else if (input.status === "in_progress") {
+          await db.recordActivity({
+            userId: ctx.user.id,
+            userName: ctx.user.name ?? "Unknown",
+            type: "skill_start",
+            refId: input.skillId,
+            refTitle: input.skillTitle,
+          });
+        }
+        return { success: true };
+      }),
+
+    /** Get points config (for display) */
+    getPointsConfig: publicProcedure.query(() => {
+      return { pointsMap: db.POINTS_MAP, levelThresholds: db.LEVEL_THRESHOLDS };
+    }),
+  }),
+
   // ========== FEISHU CONFIG ==========
   feishu: router({
     getConfig: adminProcedure.query(async () => {

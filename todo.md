@@ -163,3 +163,18 @@
 - [x] Design biweekly learning schedule mapping skills across Q2-Q4 2026
 - [x] Create BiweeklyPlan data structure and page
 - [x] Integrate biweekly plan into platform navigation
+
+## Personal Profile Page (March 2026)
+- [x] DB schema: user_points table (points balance, level, total earned)
+- [x] DB schema: user_activities table (type: case_upload/like/favorite/skill_complete/share, timestamp, ref_id)
+- [x] DB schema: user_skill_progress table (skill_id, status, completed_at)
+- [x] Backend API: get user profile with points summary
+- [x] Backend API: get user activity feed (paginated)
+- [x] Backend API: get user skill completion stats
+- [x] Backend API: record activity (case upload, like, favorite, etc.)
+- [x] Frontend: Personal Profile page with points dashboard
+- [x] Frontend: Activity timeline/feed component
+- [x] Frontend: Skill completion progress visualization
+- [x] Frontend: Achievement badges display
+- [x] Navigation: Add profile link as first item in sidebar
+- [x] Vitest tests for profile API procedures
