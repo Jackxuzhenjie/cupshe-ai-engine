@@ -227,6 +227,169 @@ export const appRouter = router({
         const { url } = await storagePut(fileKey, buffer, input.mimeType);
         return { url, fileKey };
       }),
+
+    // ===== CASE INTERACTIONS =====
+
+    /** Toggle like on a case (auto-awards points) */
+    toggleLike: protectedProcedure
+      .input(z.object({ caseId: z.number() }))
+      .mutation(async ({ ctx, input }) => {
+        const result = await db.toggleCaseLike(input.caseId, ctx.user.id, ctx.user.name ?? undefined);
+        // Record activity & award points only on like (not unlike)
+        if (result.liked) {
+          await db.recordActivity({
+            userId: ctx.user.id,
+            userName: ctx.user.name ?? "Unknown",
+            type: "case_like",
+            refId: String(input.caseId),
+            refTitle: `案例 #${input.caseId}`,
+          });
+        }
+        return result;
+      }),
+
+    /** Toggle favorite on a case (auto-awards points) */
+    toggleFavorite: protectedProcedure
+      .input(z.object({ caseId: z.number() }))
+      .mutation(async ({ ctx, input }) => {
+        const result = await db.toggleCaseFavorite(input.caseId, ctx.user.id, ctx.user.name ?? undefined);
+        if (result.favorited) {
+          await db.recordActivity({
+            userId: ctx.user.id,
+            userName: ctx.user.name ?? "Unknown",
+            type: "case_favorite",
+            refId: String(input.caseId),
+            refTitle: `案例 #${input.caseId}`,
+          });
+        }
+        return result;
+      }),
+
+    /** Add a comment to a case (auto-awards points) */
+    addComment: protectedProcedure
+      .input(z.object({
+        caseId: z.number(),
+        content: z.string().min(1).max(2000),
+        parentId: z.number().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        await db.addCaseComment({
+          caseId: input.caseId,
+          userId: ctx.user.id,
+          userName: ctx.user.name ?? "Unknown",
+          content: input.content,
+          parentId: input.parentId ?? null,
+        });
+        // Record activity & award points
+        await db.recordActivity({
+          userId: ctx.user.id,
+          userName: ctx.user.name ?? "Unknown",
+          type: "case_comment",
+          refId: String(input.caseId),
+          refTitle: `案例 #${input.caseId}`,
+        });
+        return { success: true };
+      }),
+
+    /** List comments for a case */
+    listComments: publicProcedure
+      .input(z.object({
+        caseId: z.number(),
+        limit: z.number().optional(),
+        offset: z.number().optional(),
+      }))
+      .query(async ({ input }) => {
+        return db.listCaseComments(input.caseId, { limit: input.limit, offset: input.offset });
+      }),
+
+    /** Delete a comment (own comment or admin) */
+    deleteComment: protectedProcedure
+      .input(z.object({ commentId: z.number(), caseId: z.number() }))
+      .mutation(async ({ input }) => {
+        await db.deleteCaseComment(input.commentId, input.caseId);
+        return { success: true };
+      }),
+
+    /** Get user's interaction state for a single case */
+    getInteractions: protectedProcedure
+      .input(z.object({ caseId: z.number() }))
+      .query(async ({ ctx, input }) => {
+        return db.getUserCaseInteractions(input.caseId, ctx.user.id);
+      }),
+
+    /** Batch get user's interaction state for multiple cases */
+    getInteractionsBatch: protectedProcedure
+      .input(z.object({ caseIds: z.array(z.number()) }))
+      .query(async ({ ctx, input }) => {
+        return db.getUserCaseInteractionsBatch(input.caseIds, ctx.user.id);
+      }),
+
+    /** Increment view count */
+    recordView: publicProcedure
+      .input(z.object({ caseId: z.number() }))
+      .mutation(async ({ input }) => {
+        await db.incrementCaseViewCount(input.caseId);
+        return { success: true };
+      }),
+
+    /** Get user's favorited case IDs */
+    getFavoriteIds: protectedProcedure.query(async ({ ctx }) => {
+      return db.getUserFavoritedCaseIds(ctx.user.id);
+    }),
+
+    // ===== LEADERBOARD =====
+
+    /** Top cases by likes */
+    topByLikes: publicProcedure
+      .input(z.object({ limit: z.number().optional() }).optional())
+      .query(async ({ input }) => {
+        return db.getTopCasesByLikes(input?.limit ?? 10);
+      }),
+
+    /** Top contributors by points */
+    topContributors: publicProcedure
+      .input(z.object({ limit: z.number().optional() }).optional())
+      .query(async ({ input }) => {
+        return db.getTopContributors(input?.limit ?? 10);
+      }),
+
+    /** Submit a new case (with auto activity recording & points) */
+    submit: protectedProcedure
+      .input(z.object({
+        title: z.string().min(1),
+        summary: z.string().optional(),
+        departmentId: z.number().optional(),
+        departmentName: z.string().optional(),
+        businessFunction: z.string().optional(),
+        businessScenario: z.string().optional(),
+        aiTools: z.array(z.string()).optional(),
+        aiValueType: z.string().optional(),
+        impactMetric: z.string().optional(),
+        efficiencyGain: z.string().optional(),
+        maturityLevel: z.enum(["L1", "L2", "L3", "L4", "L5"]).optional(),
+        replicability: z.enum(["low", "medium", "high"]).optional(),
+        attachments: z.any().optional(),
+        playbookSteps: z.any().optional(),
+        /** Fission: reference parent case ID */
+        fissionFromCaseId: z.number().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        await db.createCase({
+          ...input,
+          submittedBy: ctx.user.id,
+          submitterName: ctx.user.name ?? "Unknown",
+          status: "pending_review",
+        });
+        // Record activity & award points for case upload
+        await db.recordActivity({
+          userId: ctx.user.id,
+          userName: ctx.user.name ?? "Unknown",
+          type: "case_upload",
+          refId: input.title,
+          refTitle: input.title,
+        });
+        return { success: true };
+      }),
   }),
 
   // ========== WEEKLY REPORTS ==========

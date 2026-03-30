@@ -16,7 +16,7 @@
 - [x] Multi-source upload: Feishu doc link, local file, web URL, video link
 - [x] Agent/Prompt library association selector
 - [x] Submission review workflow (draft → review → published)
-- [ ] AI-assisted field suggestions
+- [ ] AI-assisted field suggestions (deferred)
 
 ## Phase 4: Org Structure
 - [x] Organization tree view with department hierarchy
@@ -178,3 +178,26 @@
 - [x] Frontend: Achievement badges display
 - [x] Navigation: Add profile link as first item in sidebar
 - [x] Vitest tests for profile API procedures
+
+## Case Library Enhancement - Upload/Interact/Leaderboard/Points (March 2026)
+- [x] DB schema: case_likes, case_favorites, case_comments tables
+- [x] Backend API: case upload with file/link support
+- [x] Backend API: like/unlike toggle with count
+- [x] Backend API: favorite/unfavorite toggle with count
+- [x] Backend API: comment CRUD (add/list/delete)
+- [x] Backend API: leaderboard (top cases by likes, top users by points)
+- [x] Backend API: auto-trigger points accumulation on case_upload/like/favorite/comment
+- [x] Frontend: case upload form (title, description, department, skill, attachments)
+- [x] Frontend: like/favorite buttons with real-time count on case cards
+- [x] Frontend: comment section under each case detail
+- [x] Frontend: leaderboard panel (top cases + top contributors)
+- [x] Integration: points auto-accumulate on user activities
+- [x] Vitest tests for case interaction procedures
+
+## Biweekly Practice Plan - Application-focused (March 2026)
+- [x] Fix CasesLibrary.tsx 16 TypeScript errors (id type string vs number mismatch)
+- [x] Design full-staff biweekly learning & practice plan starting 2026-03-30
+- [x] Plan should be application-scenario focused, not theory-heavy
+- [x] Each sprint: learn one skill → practice one scenario → produce one case
+- [x] Integrate new plan data into BiweeklyPlan page
+- [x] Test and deliver

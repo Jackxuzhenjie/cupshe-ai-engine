@@ -29,6 +29,13 @@
       "when": 1774607809455,
       "tag": "0003_dusty_mojo",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1774835529206,
+      "tag": "0004_square_stranger",
+      "breakpoints": true
     }
   ]
 }

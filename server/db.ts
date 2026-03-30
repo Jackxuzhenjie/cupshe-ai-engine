@@ -1,7 +1,7 @@
 import { eq, desc, asc, and, like, sql, inArray } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, departments, caseSubmissions, feishuConfig, weeklyReports, userPoints, userActivities, userSkillProgress } from "../drizzle/schema";
-import type { InsertDepartment, InsertCaseSubmission, InsertFeishuConfig, InsertWeeklyReport, InsertUserActivity, InsertUserSkillProgress } from "../drizzle/schema";
+import { InsertUser, users, departments, caseSubmissions, feishuConfig, weeklyReports, userPoints, userActivities, userSkillProgress, caseLikes, caseFavorites, caseComments } from "../drizzle/schema";
+import type { InsertDepartment, InsertCaseSubmission, InsertFeishuConfig, InsertWeeklyReport, InsertUserActivity, InsertUserSkillProgress, InsertCaseComment } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -524,6 +524,158 @@ export async function getSkillProgressStats(userId: number) {
     inProgress: progress.filter(p => p.status === "in_progress").length,
     notStarted: progress.filter(p => p.status === "not_started").length,
   };
+}
+
+// ========== CASE INTERACTION QUERIES ==========
+
+/** Toggle like on a case. Returns new like state and count. */
+export async function toggleCaseLike(caseId: number, userId: number, userName?: string) {
+  const db = await getDb();
+  if (!db) return { liked: false, likeCount: 0 };
+  const existing = await db.select().from(caseLikes)
+    .where(and(eq(caseLikes.caseId, caseId), eq(caseLikes.userId, userId)))
+    .limit(1);
+  if (existing.length > 0) {
+    // Unlike
+    await db.delete(caseLikes).where(eq(caseLikes.id, existing[0].id));
+    await db.update(caseSubmissions).set({ likeCount: sql`GREATEST(COALESCE(likeCount, 0) - 1, 0)` }).where(eq(caseSubmissions.id, caseId));
+    const updated = await getCase(caseId);
+    return { liked: false, likeCount: updated?.likeCount ?? 0 };
+  } else {
+    // Like
+    await db.insert(caseLikes).values({ caseId, userId, userName: userName ?? null });
+    await db.update(caseSubmissions).set({ likeCount: sql`COALESCE(likeCount, 0) + 1` }).where(eq(caseSubmissions.id, caseId));
+    const updated = await getCase(caseId);
+    return { liked: true, likeCount: updated?.likeCount ?? 0 };
+  }
+}
+
+/** Toggle favorite on a case. Returns new favorite state and count. */
+export async function toggleCaseFavorite(caseId: number, userId: number, userName?: string) {
+  const db = await getDb();
+  if (!db) return { favorited: false, favoriteCount: 0 };
+  const existing = await db.select().from(caseFavorites)
+    .where(and(eq(caseFavorites.caseId, caseId), eq(caseFavorites.userId, userId)))
+    .limit(1);
+  if (existing.length > 0) {
+    await db.delete(caseFavorites).where(eq(caseFavorites.id, existing[0].id));
+    await db.update(caseSubmissions).set({ favoriteCount: sql`GREATEST(COALESCE(favoriteCount, 0) - 1, 0)` }).where(eq(caseSubmissions.id, caseId));
+    const updated = await getCase(caseId);
+    return { favorited: false, favoriteCount: updated?.favoriteCount ?? 0 };
+  } else {
+    await db.insert(caseFavorites).values({ caseId, userId, userName: userName ?? null });
+    await db.update(caseSubmissions).set({ favoriteCount: sql`COALESCE(favoriteCount, 0) + 1` }).where(eq(caseSubmissions.id, caseId));
+    const updated = await getCase(caseId);
+    return { favorited: true, favoriteCount: updated?.favoriteCount ?? 0 };
+  }
+}
+
+/** Add a comment to a case */
+export async function addCaseComment(data: InsertCaseComment) {
+  const db = await getDb();
+  if (!db) return;
+  await db.insert(caseComments).values(data);
+  await db.update(caseSubmissions).set({ commentCount: sql`COALESCE(commentCount, 0) + 1` }).where(eq(caseSubmissions.id, data.caseId));
+}
+
+/** List comments for a case */
+export async function listCaseComments(caseId: number, opts?: { limit?: number; offset?: number }) {
+  const db = await getDb();
+  if (!db) return { comments: [], total: 0 };
+  const limit = opts?.limit ?? 50;
+  const offset = opts?.offset ?? 0;
+  const [commentsResult, countResult] = await Promise.all([
+    db.select().from(caseComments).where(eq(caseComments.caseId, caseId)).orderBy(desc(caseComments.createdAt)).limit(limit).offset(offset),
+    db.select({ count: sql<number>`count(*)` }).from(caseComments).where(eq(caseComments.caseId, caseId)),
+  ]);
+  return { comments: commentsResult, total: countResult[0]?.count ?? 0 };
+}
+
+/** Delete a comment */
+export async function deleteCaseComment(commentId: number, caseId: number) {
+  const db = await getDb();
+  if (!db) return;
+  await db.delete(caseComments).where(eq(caseComments.id, commentId));
+  await db.update(caseSubmissions).set({ commentCount: sql`GREATEST(COALESCE(commentCount, 0) - 1, 0)` }).where(eq(caseSubmissions.id, caseId));
+}
+
+/** Check if user has liked/favorited a case */
+export async function getUserCaseInteractions(caseId: number, userId: number) {
+  const db = await getDb();
+  if (!db) return { liked: false, favorited: false };
+  const [likeResult, favResult] = await Promise.all([
+    db.select().from(caseLikes).where(and(eq(caseLikes.caseId, caseId), eq(caseLikes.userId, userId))).limit(1),
+    db.select().from(caseFavorites).where(and(eq(caseFavorites.caseId, caseId), eq(caseFavorites.userId, userId))).limit(1),
+  ]);
+  return { liked: likeResult.length > 0, favorited: favResult.length > 0 };
+}
+
+/** Batch check interactions for multiple cases */
+export async function getUserCaseInteractionsBatch(caseIds: number[], userId: number) {
+  const db = await getDb();
+  if (!db || caseIds.length === 0) return {};
+  const [likes, favs] = await Promise.all([
+    db.select().from(caseLikes).where(and(inArray(caseLikes.caseId, caseIds), eq(caseLikes.userId, userId))),
+    db.select().from(caseFavorites).where(and(inArray(caseFavorites.caseId, caseIds), eq(caseFavorites.userId, userId))),
+  ]);
+  const result: Record<number, { liked: boolean; favorited: boolean }> = {};
+  for (const id of caseIds) {
+    result[id] = { liked: likes.some(l => l.caseId === id), favorited: favs.some(f => f.caseId === id) };
+  }
+  return result;
+}
+
+/** Increment view count */
+export async function incrementCaseViewCount(caseId: number) {
+  const db = await getDb();
+  if (!db) return;
+  await db.update(caseSubmissions).set({ viewCount: sql`COALESCE(viewCount, 0) + 1` }).where(eq(caseSubmissions.id, caseId));
+}
+
+/** Get leaderboard: top cases by likes */
+export async function getTopCasesByLikes(limit = 10) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select({
+    id: caseSubmissions.id,
+    title: caseSubmissions.title,
+    departmentName: caseSubmissions.departmentName,
+    submitterName: caseSubmissions.submitterName,
+    likeCount: caseSubmissions.likeCount,
+    favoriteCount: caseSubmissions.favoriteCount,
+    commentCount: caseSubmissions.commentCount,
+    viewCount: caseSubmissions.viewCount,
+    totalScore: caseSubmissions.totalScore,
+    maturityLevel: caseSubmissions.maturityLevel,
+    createdAt: caseSubmissions.createdAt,
+  }).from(caseSubmissions)
+    .where(eq(caseSubmissions.status, "published"))
+    .orderBy(desc(caseSubmissions.likeCount))
+    .limit(limit);
+}
+
+/** Get leaderboard: top contributors by total points */
+export async function getTopContributors(limit = 10) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select({
+    userId: userPoints.userId,
+    userName: userPoints.userName,
+    totalEarned: userPoints.totalEarned,
+    level: userPoints.level,
+    levelTitle: userPoints.levelTitle,
+    departmentName: userPoints.departmentName,
+  }).from(userPoints)
+    .orderBy(desc(userPoints.totalEarned))
+    .limit(limit);
+}
+
+/** Get user's favorited case IDs */
+export async function getUserFavoritedCaseIds(userId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  const result = await db.select({ caseId: caseFavorites.caseId }).from(caseFavorites).where(eq(caseFavorites.userId, userId));
+  return result.map(r => r.caseId);
 }
 
 export { POINTS_MAP, LEVEL_THRESHOLDS, getLevelInfo };

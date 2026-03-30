@@ -113,12 +113,65 @@ export const caseSubmissions = mysqlTable("case_submissions", {
   reviewedBy: int("reviewedBy"),
   reviewNote: text("reviewNote"),
   publishedAt: timestamp("publishedAt"),
+  /** Interaction counts */
+  likeCount: int("likeCount").default(0),
+  favoriteCount: int("favoriteCount").default(0),
+  commentCount: int("commentCount").default(0),
+  /** View count */
+  viewCount: int("viewCount").default(0),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 });
 
 export type CaseSubmission = typeof caseSubmissions.$inferSelect;
 export type InsertCaseSubmission = typeof caseSubmissions.$inferInsert;
+
+/**
+ * Case Likes — tracks who liked which case
+ */
+export const caseLikes = mysqlTable("case_likes", {
+  id: int("id").autoincrement().primaryKey(),
+  caseId: int("caseId").notNull(),
+  userId: int("userId").notNull(),
+  userName: varchar("userName", { length: 255 }),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type CaseLike = typeof caseLikes.$inferSelect;
+export type InsertCaseLike = typeof caseLikes.$inferInsert;
+
+/**
+ * Case Favorites — tracks who favorited which case
+ */
+export const caseFavorites = mysqlTable("case_favorites", {
+  id: int("id").autoincrement().primaryKey(),
+  caseId: int("caseId").notNull(),
+  userId: int("userId").notNull(),
+  userName: varchar("userName", { length: 255 }),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type CaseFavorite = typeof caseFavorites.$inferSelect;
+export type InsertCaseFavorite = typeof caseFavorites.$inferInsert;
+
+/**
+ * Case Comments — user comments on cases
+ */
+export const caseComments = mysqlTable("case_comments", {
+  id: int("id").autoincrement().primaryKey(),
+  caseId: int("caseId").notNull(),
+  userId: int("userId").notNull(),
+  userName: varchar("userName", { length: 255 }),
+  userAvatar: text("userAvatar"),
+  content: text("content").notNull(),
+  /** Parent comment ID for replies */
+  parentId: int("parentId"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type CaseComment = typeof caseComments.$inferSelect;
+export type InsertCaseComment = typeof caseComments.$inferInsert;
 
 /**
  * Feishu integration configuration

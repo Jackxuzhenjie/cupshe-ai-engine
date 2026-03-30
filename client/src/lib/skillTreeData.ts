@@ -2334,156 +2334,161 @@ export const sprintPhaseConfig: Record<SprintPhase, { zh: string; en: string; co
 };
 
 export const biweeklySchedule: BiweeklySprint[] = [
+  // ===== Phase 1: 全员基础实战 (Sprint 1-4, 3/30 - 5/22) =====
   {
-    sprint: 1, startDate: "2026-04-07", endDate: "2026-04-18", skillId: "F01",
-    theme: "AI基础认知与工具入门", phase: "foundation", targetDepartments: ["all"],
-    aiChampionRole: "带领部门成员完成AI工具注册，组织部门内AI初体验分享",
-    caseTarget: 14, sharingTheme: "各中心AI初体验故事分享",
-    milestones: ["全员完成AI基础测评", "每人注册并使用至少1个AI工具", "每中心提交1个AI初体验案例"],
-    closedLoop: "学习AI基础→AI科代表带动部门实操→提交初体验案例(用公司级Prompt)→沉淀到平台→通晒投票→双周分享会"
+    sprint: 1, startDate: "2026-03-30", endDate: "2026-04-10", skillId: "F01",
+    theme: "用AI写一封让老板满意的邮件", phase: "foundation", targetDepartments: ["all"],
+    aiChampionRole: "收集部门内3个高频邮件/汇报场景，带领团队用ChatGPT/Claude逐一实操，对比AI前后效果",
+    caseTarget: 14, sharingTheme: "AI写作初体验——谁的邮件/汇报改造最惊艳？",
+    milestones: ["全员注册并登录至少1个AI工具(ChatGPT/Claude/Kimi)", "每人用AI完成1封真实业务邮件或1份周报", "每中心提交1个AI写作前后对比案例"],
+    closedLoop: "场景：日常邮件/周报/汇报→AI科代表收集部门高频写作场景→全员实操AI改写→截图对比前后效果→上传平台案例(用公司级Prompt)→通晒投票→双周分享会"
   },
   {
-    sprint: 2, startDate: "2026-04-21", endDate: "2026-05-02", skillId: "F02",
-    theme: "Prompt Engineering核心技能", phase: "foundation", targetDepartments: ["all"],
-    aiChampionRole: "组织部门Prompt实战工作坊，收集并优化部门高频业务Prompt",
-    caseTarget: 28, sharingTheme: "最佳业务Prompt评选与分享",
-    milestones: ["全员完成Prompt工程课程", "每人提交3个业务场景Prompt", "部门AI科代表选拔完成"],
-    closedLoop: "学习Prompt技巧→AI科代表组织部门Prompt工作坊→每人提交3个Prompt→优秀Prompt沉淀到Prompt库→通晒投票→双周分享会评选最佳Prompt"
+    sprint: 2, startDate: "2026-04-13", endDate: "2026-04-24", skillId: "F02",
+    theme: "用Prompt让AI变成你的专属助理", phase: "foundation", targetDepartments: ["all"],
+    aiChampionRole: "组织部门Prompt实战工作坊：每人带1个真实业务问题，现场用Prompt框架(角色+任务+约束+输出格式)改造",
+    caseTarget: 28, sharingTheme: "最佳业务Prompt评选——谁调教AI最有一套？",
+    milestones: ["全员掌握CRISPE/CO-STAR Prompt框架", "每人提交3个本岗位高频业务Prompt", "各部门AI科代表正式任命并公示"],
+    closedLoop: "场景：岗位高频任务→AI科代表组织Prompt工作坊→每人用框架写3个业务Prompt→互相测试打分→优秀Prompt沉淀到平台Prompt库→通晒投票→双周分享会评选部门最佳Prompt"
   },
   {
-    sprint: 3, startDate: "2026-05-05", endDate: "2026-05-16", skillId: "F03",
-    theme: "AI办公提效实战", phase: "foundation", targetDepartments: ["all"],
-    aiChampionRole: "收集部门日常办公痛点，用AI工具逐一攻破，建立部门AI办公模板库",
-    caseTarget: 14, sharingTheme: "AI办公提效案例通晒——谁省的时间最多？",
-    milestones: ["全员用AI完成1篇业务文档", "各部门建立AI写作模板库", "首批案例上传平台通晒"],
-    closedLoop: "学习AI办公技能→AI科代表收集部门痛点→逐一用AI攻破→产出效率对比案例→上传平台通晒→投票评选→双周分享会"
+    sprint: 3, startDate: "2026-04-27", endDate: "2026-05-08", skillId: "F03",
+    theme: "AI帮你做PPT/Excel/会议纪要", phase: "foundation", targetDepartments: ["all"],
+    aiChampionRole: "收集部门Top 5重复性办公任务(PPT/Excel/会议纪要/翻译/排期)，逐一用AI工具攻破，录制操作视频",
+    caseTarget: 14, sharingTheme: "AI办公提效PK——谁省的时间最多？(附效率计时)",
+    milestones: ["全员用AI完成1个真实办公任务(PPT/Excel/会议纪要任选)", "各部门建立AI办公模板库(至少5个模板)", "效率对比数据：AI前耗时 vs AI后耗时"],
+    closedLoop: "场景：PPT/Excel/会议纪要→AI科代表收集部门重复任务→逐一用AI攻破并计时→产出效率对比案例(含截图+计时)→上传平台→通晒投票→双周分享会PK"
   },
   {
-    sprint: 4, startDate: "2026-05-19", endDate: "2026-05-30", skillId: "F04",
-    theme: "AI信息检索与数据分析基础", phase: "foundation", targetDepartments: ["all"],
-    aiChampionRole: "带领部门用AI完成一次真实业务数据分析，识别部门Top 3 AI分析场景",
-    caseTarget: 14, sharingTheme: "AI数据分析实战案例——从数据到洞察",
-    milestones: ["全员用AI完成1次数据分析", "各部门识别Top 3 AI分析场景", "数据脱敏规范培训完成"],
-    closedLoop: "学习AI分析技能→AI科代表带领真实数据分析→产出分析案例→沉淀分析Prompt模板→通晒投票→双周分享会"
+    sprint: 4, startDate: "2026-05-11", endDate: "2026-05-22", skillId: "F04",
+    theme: "用AI做一次真实的业务数据分析", phase: "foundation", targetDepartments: ["all"],
+    aiChampionRole: "带领部门用AI分析一份真实业务数据(销售/流量/库存/客诉)，从数据清洗到洞察输出全流程",
+    caseTarget: 14, sharingTheme: "AI数据分析实战——从Excel到洞察只需10分钟",
+    milestones: ["全员用AI完成1次真实数据分析(脱敏后)", "各部门识别Top 3 AI分析场景并建立模板", "数据安全脱敏规范培训完成"],
+    closedLoop: "场景：业务数据分析→AI科代表准备脱敏数据集→全员实操AI分析→产出洞察报告→沉淀分析Prompt模板→通晒投票→双周分享会展示洞察"
+  },
+  // ===== Phase 2: 三大试点深化 (Sprint 5-8, 5/25 - 7/17) =====
+  {
+    sprint: 5, startDate: "2026-05-25", endDate: "2026-06-05", skillId: "MK01",
+    theme: "AI写广告文案——ROAS提升实战", phase: "pilot-deep", targetDepartments: ["marketing"],
+    aiChampionRole: "营销AI科代表选取3个在投广告组，用AI生成5版替代文案，跑A/B测试对比ROAS",
+    caseTarget: 5, sharingTheme: "营销AI试点首战——AI文案 vs 人工文案ROAS对决",
+    milestones: ["选取3个广告组进行AI文案A/B测试", "产出ROAS对比数据报告", "沉淀广告文案AI生成SOP"],
+    closedLoop: "场景：广告文案优化→AI科代表选广告组→AI生成替代文案→投放A/B测试→收集ROAS数据→产出对比案例→全公司通晒→其他部门可裂变复用文案Prompt→双周分享会"
   },
   {
-    sprint: 5, startDate: "2026-06-02", endDate: "2026-06-13", skillId: "MK01",
-    theme: "AI广告投放优化（营销试点深化）", phase: "pilot-deep", targetDepartments: ["marketing"],
-    aiChampionRole: "营销AI科代表主导广告文案A/B测试，建立AI广告优化标准流程",
-    caseTarget: 5, sharingTheme: "营销AI试点成果通晒——ROAS提升实录",
-    milestones: ["营销中心完成AI广告优化实战", "产出3个广告优化案例", "ROAS提升目标验证"],
-    closedLoop: "深入学习广告AI→AI科代表主导A/B测试→产出ROAS提升案例→沉淀广告Prompt模板→全公司通晒→其他部门可裂变复用→双周分享会"
+    sprint: 6, startDate: "2026-06-08", endDate: "2026-06-19", skillId: "CR01",
+    theme: "AI生成商品主图——从Brief到成图", phase: "pilot-deep", targetDepartments: ["creative"],
+    aiChampionRole: "创意AI科代表选取5个SKU，用Midjourney/DALL-E从设计Brief到成图全流程标准化",
+    caseTarget: 5, sharingTheme: "创意AI试点——AI主图 vs 摄影主图盲测投票",
+    milestones: ["5个SKU完成AI主图生成", "建立品牌视觉一致性检查Checklist", "组织全公司AI图 vs 实拍图盲测投票"],
+    closedLoop: "场景：商品主图生成→AI科代表选SKU→AI生成主图→品牌一致性检查→盲测投票→产出AI视觉案例→沉淀视觉Prompt模板→全公司通晒→营销/多渠道可裂变复用→双周分享会"
   },
   {
-    sprint: 6, startDate: "2026-06-16", endDate: "2026-06-27", skillId: "CR01",
-    theme: "AI视觉内容生成（创意试点深化）", phase: "pilot-deep", targetDepartments: ["creative"],
-    aiChampionRole: "创意AI科代表主导AI视觉生成流程标准化，建立品牌一致性检查机制",
-    caseTarget: 5, sharingTheme: "创意AI试点成果通晒——AI视觉创作展",
-    milestones: ["创意中心完成AI视觉实战", "建立Prompt模板库v1.0", "产出5个AI视觉案例"],
-    closedLoop: "深入学习视觉AI→AI科代表主导视觉生成标准化→产出AI视觉案例→沉淀视觉Prompt模板→全公司通晒→营销/多渠道可裂变复用→双周分享会"
+    sprint: 7, startDate: "2026-06-22", endDate: "2026-07-03", skillId: "OP01",
+    theme: "AI客服话术——响应速度翻倍", phase: "pilot-deep", targetDepartments: ["operations"],
+    aiChampionRole: "运营AI科代表梳理Top 20高频客诉场景，用AI生成标准回复模板，测试响应时间",
+    caseTarget: 5, sharingTheme: "运营AI试点——客服响应从5分钟到30秒",
+    milestones: ["梳理Top 20高频客诉场景", "AI生成标准回复模板库", "响应时间对比数据(AI前 vs AI后)"],
+    closedLoop: "场景：客服回复→AI科代表梳理高频场景→AI生成回复模板→客服团队实测→收集响应时间数据→产出效率案例→沉淀FAQ模板→全公司通晒→双周分享会"
   },
   {
-    sprint: 7, startDate: "2026-06-30", endDate: "2026-07-11", skillId: "OP01",
-    theme: "AI客户服务优化", phase: "department-expand", targetDepartments: ["operations"],
-    aiChampionRole: "运营AI科代表主导客服AI话术模板建设，组织客服团队AI实操训练",
-    caseTarget: 3, sharingTheme: "运营AI客服实战——响应速度与满意度双提升",
-    milestones: ["运营中心完成AI客服实战", "建立FAQ AI回复模板库", "客服效率提升目标验证"],
-    closedLoop: "学习客服AI技能→AI科代表组织客服实操→产出客服效率案例→沉淀FAQ模板→通晒投票→其他部门客服可裂变复用→双周分享会"
+    sprint: 8, startDate: "2026-07-06", endDate: "2026-07-17", skillId: "OP02",
+    theme: "AI商品分析——从Excel到自动化洞察", phase: "pilot-deep", targetDepartments: ["operations", "it"],
+    aiChampionRole: "运营+IT AI科代表联合，将1个月度商品分析报告从手工Excel改造为AI自动化流程",
+    caseTarget: 4, sharingTheme: "数据AI试点——月度商品分析从3天到3小时",
+    milestones: ["选取1份月度商品分析报告进行AI改造", "建立AI分析自动化工作流", "产出效率对比(3天→3小时)"],
+    closedLoop: "场景：月度商品分析→AI科代表联合选报告→AI改造分析流程→对比效率→产出案例→沉淀分析模板→全公司通晒→财务/供应链可裂变复用→双周分享会"
+  },
+  // ===== Phase 3: 部门扩展实战 (Sprint 9-15, 7/20 - 10/23) =====
+  {
+    sprint: 9, startDate: "2026-07-20", endDate: "2026-07-31", skillId: "MC01",
+    theme: "AI优化Amazon/TikTok Listing——转化率提升", phase: "department-expand", targetDepartments: ["multi-channel"],
+    aiChampionRole: "多渠道AI科代表选取10个低转化Listing，用AI重写标题/五点/A+，跑A/B测试",
+    caseTarget: 3, sharingTheme: "多渠道Listing AI改造——转化率提升实录",
+    milestones: ["10个Listing完成AI改写", "A/B测试数据收集(2周)", "产出Listing优化Prompt模板"],
+    closedLoop: "场景：Listing优化→AI科代表选低转化Listing→AI重写→A/B测试→收集转化数据→产出案例→沉淀模板→通晒投票→营销/产品可裂变复用→双周分享会"
   },
   {
-    sprint: 8, startDate: "2026-07-14", endDate: "2026-07-25", skillId: "OP02",
-    theme: "AI商品运营分析（数据试点深化）", phase: "pilot-deep", targetDepartments: ["operations", "it"],
-    aiChampionRole: "运营+IT AI科代表联合主导数据分析流程AI化，建立数据分析Prompt标准",
-    caseTarget: 4, sharingTheme: "数据AI试点成果通晒——从Excel到AI洞察",
-    milestones: ["完成AI商品分析实战", "产出数据分析模板库", "分析效率提升目标验证"],
-    closedLoop: "深入学习数据AI→AI科代表联合主导分析流程→产出分析效率案例→沉淀分析模板→全公司通晒→财务/供应链可裂变复用→双周分享会"
+    sprint: 10, startDate: "2026-08-03", endDate: "2026-08-14", skillId: "PD01",
+    theme: "AI选品——用AI发现下一个爆款", phase: "department-expand", targetDepartments: ["product"],
+    aiChampionRole: "产品AI科代表用AI分析Google Trends+社媒数据，产出1份AI选品报告，与传统选品结果对比",
+    caseTarget: 3, sharingTheme: "产品AI选品——AI推荐 vs 买手直觉谁更准？",
+    milestones: ["用AI完成1份完整选品报告", "AI选品 vs 传统选品结果对比", "建立AI趋势分析自动化工作流"],
+    closedLoop: "场景：新品选品→AI科代表用AI分析趋势→产出选品报告→与买手判断对比→产出案例→沉淀选品Prompt→通晒投票→营销/供应链可裂变复用→双周分享会"
   },
   {
-    sprint: 9, startDate: "2026-07-28", endDate: "2026-08-08", skillId: "MC01",
-    theme: "AI多渠道Listing优化", phase: "department-expand", targetDepartments: ["multi-channel"],
-    aiChampionRole: "多渠道AI科代表主导Listing AI优化A/B测试，建立多平台Listing模板",
-    caseTarget: 3, sharingTheme: "多渠道Listing AI优化——转化率提升实录",
-    milestones: ["多渠道完成Listing AI优化实战", "产出Listing优化Prompt模板", "转化率提升目标验证"],
-    closedLoop: "学习Listing AI优化→AI科代表主导A/B测试→产出转化率案例→沉淀Listing模板→通晒投票→营销/产品可裂变复用→双周分享会"
+    sprint: 11, startDate: "2026-08-17", endDate: "2026-08-28", skillId: "SC01",
+    theme: "AI供应商评估——从人工打分到智能评级", phase: "department-expand", targetDepartments: ["supply-chain"],
+    aiChampionRole: "供应链AI科代表将供应商评估表AI化，用AI自动分析供应商历史数据并生成评级报告",
+    caseTarget: 3, sharingTheme: "供应链AI——供应商评估从2天到2小时",
+    milestones: ["5家供应商完成AI评估试点", "AI评级 vs 人工评级一致性验证", "建立供应商AI评估模板"],
+    closedLoop: "场景：供应商评估→AI科代表准备历史数据→AI生成评级报告→与人工评级对比→产出案例→沉淀评估模板→通晒投票→采购可裂变复用→双周分享会"
   },
   {
-    sprint: 10, startDate: "2026-08-11", endDate: "2026-08-22", skillId: "PD01",
-    theme: "AI趋势洞察与选品", phase: "department-expand", targetDepartments: ["product"],
-    aiChampionRole: "产品AI科代表主导AI选品流程建设，建立趋势分析自动化工作流",
-    caseTarget: 3, sharingTheme: "产品AI选品实战——AI如何发现下一个爆款",
-    milestones: ["产品中心完成AI选品实战", "产出趋势分析报告模板", "选品命中率目标验证"],
-    closedLoop: "学习AI选品技能→AI科代表主导选品流程→产出选品案例→沉淀趋势分析模板→通晒投票→营销/供应链可裂变复用→双周分享会"
+    sprint: 12, startDate: "2026-08-31", endDate: "2026-09-11", skillId: "IT01",
+    theme: "AI写代码——Copilot/Cursor全员实战", phase: "department-expand", targetDepartments: ["it"],
+    aiChampionRole: "IT AI科代表主导Copilot/Cursor全员部署，每人用AI完成1个真实开发任务并记录效率",
+    caseTarget: 3, sharingTheme: "IT AI开发——代码效率提升实录(附代码对比)",
+    milestones: ["IT全员部署Copilot/Cursor", "每人用AI完成1个真实开发任务", "产出开发效率对比数据"],
+    closedLoop: "场景：代码开发→AI科代表部署工具→全员实操→记录效率数据→产出案例(含代码对比)→沉淀AI开发规范→通晒投票→双周分享会"
   },
   {
-    sprint: 11, startDate: "2026-08-25", endDate: "2026-09-05", skillId: "SC01",
-    theme: "AI供应商管理", phase: "department-expand", targetDepartments: ["supply-chain"],
-    aiChampionRole: "供应链AI科代表主导供应商评估AI化，建立供应商风险预警模型",
-    caseTarget: 3, sharingTheme: "供应链AI实战——供应商评估效率革命",
-    milestones: ["供应链完成AI供应商评估实战", "产出供应商评估模板", "评审效率提升目标验证"],
-    closedLoop: "学习供应商AI管理→AI科代表主导评估流程→产出评估效率案例→沉淀评估模板→通晒投票→采购/质量可裂变复用→双周分享会"
+    sprint: 13, startDate: "2026-09-14", endDate: "2026-09-25", skillId: "FN01",
+    theme: "AI做月报——财务分析效率革命", phase: "department-expand", targetDepartments: ["finance"],
+    aiChampionRole: "财务AI科代表将1份月度财务分析报告AI化，从数据提取到异常标注到报告生成全流程",
+    caseTarget: 3, sharingTheme: "财务AI——月报从3天到3小时的秘密",
+    milestones: ["1份月度财务报告完成AI改造", "建立财务分析Prompt模板库", "异常检测准确率验证"],
+    closedLoop: "场景：月度财务报告→AI科代表选报告→AI改造全流程→对比效率→产出案例→沉淀财务模板→通晒投票→运营/供应链可裂变复用→双周分享会"
   },
   {
-    sprint: 12, startDate: "2026-09-08", endDate: "2026-09-19", skillId: "IT01",
-    theme: "AI辅助开发与运维", phase: "department-expand", targetDepartments: ["it"],
-    aiChampionRole: "IT AI科代表主导Copilot/Cursor全员部署，建立AI代码审查流程",
-    caseTarget: 3, sharingTheme: "IT AI开发实战——代码效率提升实录",
-    milestones: ["IT全员部署Copilot/Cursor", "产出AI开发效率报告", "开发效率提升目标验证"],
-    closedLoop: "学习AI开发工具→AI科代表主导工具部署→产出效率提升案例→沉淀AI开发规范→通晒投票→双周分享会"
+    sprint: 14, startDate: "2026-09-28", endDate: "2026-10-09", skillId: "HR01",
+    theme: "AI写JD/筛简历——招聘效率翻倍", phase: "department-expand", targetDepartments: ["hr"],
+    aiChampionRole: "HR AI科代表用AI改造3个在招岗位的JD+简历筛选流程，对比招聘效率",
+    caseTarget: 3, sharingTheme: "HR AI——从JD到简历筛选的AI全流程",
+    milestones: ["3个岗位JD完成AI改写", "AI简历筛选 vs 人工筛选效率对比", "建立JD/面试题AI模板库"],
+    closedLoop: "场景：招聘流程→AI科代表选岗位→AI改写JD+筛简历→对比效率→产出案例→沉淀JD/面试模板→通晒投票→各部门招聘可裂变复用→双周分享会"
   },
   {
-    sprint: 13, startDate: "2026-09-22", endDate: "2026-10-03", skillId: "FN01",
-    theme: "AI财务分析与报告", phase: "department-expand", targetDepartments: ["finance"],
-    aiChampionRole: "财务AI科代表主导月报AI化，建立财务分析Prompt标准模板",
-    caseTarget: 3, sharingTheme: "财务AI实战——月报效率提升与异常检测",
-    milestones: ["财务完成AI分析实战", "建立财务分析模板库", "月报效率提升目标验证"],
-    closedLoop: "学习财务AI分析→AI科代表主导月报AI化→产出效率案例→沉淀财务模板→通晒投票→运营/供应链可裂变复用→双周分享会"
+    sprint: 15, startDate: "2026-10-12", endDate: "2026-10-23", skillId: "LG01",
+    theme: "AI物流异常预警——从被动救火到主动预防", phase: "department-expand", targetDepartments: ["logistics"],
+    aiChampionRole: "物流AI科代表用AI分析历史物流数据，建立异常预警模型，对比预警准确率",
+    caseTarget: 3, sharingTheme: "物流AI——异常预警从0到1的突破",
+    milestones: ["历史物流数据AI分析完成", "异常预警模型v1.0建立", "预警准确率验证"],
+    closedLoop: "场景：物流异常管理→AI科代表准备历史数据→AI建立预警模型→验证准确率→产出案例→沉淀物流模板→通晒投票→供应链可裂变复用→双周分享会"
+  },
+  // ===== Phase 4: 进阶提升+安全合规 (Sprint 16-18, 10/26 - 12/04) =====
+  {
+    sprint: 16, startDate: "2026-10-26", endDate: "2026-11-06", skillId: "F05",
+    theme: "AI安全红线——你踩过哪些坑？", phase: "advanced", targetDepartments: ["all"],
+    aiChampionRole: "各部门AI科代表收集本部门AI使用中的安全隐患案例(数据泄露/幻觉/版权)，组织安全攻防演练",
+    caseTarget: 14, sharingTheme: "AI安全合规——踩过的坑与避坑指南",
+    milestones: ["全员完成AI安全培训(含测试)", "各部门提交AI安全隐患案例", "CUPSHE AI使用安全规范v1.0发布"],
+    closedLoop: "场景：AI安全合规→AI科代表收集安全隐患→组织攻防演练→产出避坑案例→沉淀安全规范→通晒投票→双周分享会"
   },
   {
-    sprint: 14, startDate: "2026-10-06", endDate: "2026-10-17", skillId: "HR01",
-    theme: "AI招聘与人才管理", phase: "department-expand", targetDepartments: ["hr"],
-    aiChampionRole: "HR AI科代表主导JD AI生成标准化，建立面试题库AI辅助系统",
-    caseTarget: 3, sharingTheme: "HR AI实战——招聘效率与人才匹配度提升",
-    milestones: ["HR完成AI招聘实战", "建立JD和面试题AI模板库", "招聘效率提升目标验证"],
-    closedLoop: "学习招聘AI技能→AI科代表主导JD标准化→产出招聘效率案例→沉淀JD/面试模板→通晒投票→各部门招聘可裂变复用→双周分享会"
+    sprint: 17, startDate: "2026-11-09", endDate: "2026-11-20", skillId: "F06",
+    theme: "跨部门AI协作——打破信息孤岛", phase: "advanced", targetDepartments: ["all"],
+    aiChampionRole: "各部门AI科代表联合发起1个跨部门AI协作项目(如：营销+创意联合AI内容生产线)",
+    caseTarget: 7, sharingTheme: "跨部门AI协作——从孤岛到生态的7个故事",
+    milestones: ["至少3个跨部门AI协作项目启动", "各项目产出协作流程SOP", "跨部门案例裂变数量统计"],
+    closedLoop: "场景：跨部门协作→AI科代表联合发起项目→多部门协同实操→产出协作案例→沉淀协作SOP→通晒投票→双周分享会"
   },
   {
-    sprint: 15, startDate: "2026-10-20", endDate: "2026-10-31", skillId: "LG01",
-    theme: "AI物流优化", phase: "department-expand", targetDepartments: ["logistics"],
-    aiChampionRole: "物流AI科代表主导物流数据分析AI化，建立物流异常预警模型",
-    caseTarget: 3, sharingTheme: "物流AI实战——配送效率与成本优化",
-    milestones: ["物流完成AI分析实战", "建立物流分析模板", "物流效率提升目标验证"],
-    closedLoop: "学习物流AI分析→AI科代表主导分析流程→产出效率案例→沉淀物流模板→通晒投票→供应链可裂变复用→双周分享会"
+    sprint: 18, startDate: "2026-11-23", endDate: "2026-12-04", skillId: "MK02",
+    theme: "AI个性化营销——千人千面实战", phase: "advanced", targetDepartments: ["marketing", "operations", "multi-channel"],
+    aiChampionRole: "营销+运营+多渠道AI科代表联合，用AI构建用户分群→个性化内容→自动化触达的完整链路",
+    caseTarget: 4, sharingTheme: "AI增长进阶——个性化营销与复购率提升实录",
+    milestones: ["完成AI用户分群模型", "个性化内容生成链路跑通", "复购率/转化率对比数据"],
+    closedLoop: "场景：个性化营销→AI科代表联合构建链路→实操用户分群+内容生成+触达→收集转化数据→产出案例→沉淀增长模板→全公司通晒→可裂变复用→双周分享会"
   },
+  // ===== Phase 5: 年度复盘 (Sprint 19, 12/07 - 12/18) =====
   {
-    sprint: 16, startDate: "2026-11-03", endDate: "2026-11-14", skillId: "F05",
-    theme: "AI安全与合规（全员回顾）", phase: "foundation", targetDepartments: ["all"],
-    aiChampionRole: "各部门AI科代表收集本部门AI使用安全问题，组织安全合规培训",
-    caseTarget: 14, sharingTheme: "AI安全合规——踩过的坑与最佳实践",
-    milestones: ["全员完成AI安全培训", "AI使用规范发布", "安全审计完成"],
-    closedLoop: "学习AI安全规范→AI科代表收集安全问题→产出安全最佳实践案例→沉淀安全规范→通晒投票→双周分享会"
-  },
-  {
-    sprint: 17, startDate: "2026-11-17", endDate: "2026-11-28", skillId: "F06",
-    theme: "AI协作与知识共享（全员深化）", phase: "foundation", targetDepartments: ["all"],
-    aiChampionRole: "各部门AI科代表主导跨部门AI协作项目，推动知识库标准化",
-    caseTarget: 14, sharingTheme: "跨部门AI协作最佳实践——从孤岛到生态",
-    milestones: ["全员完成AI协作培训", "各部门AI协作流程标准化", "跨部门AI协作案例产出"],
-    closedLoop: "学习AI协作方法→AI科代表主导跨部门项目→产出协作案例→沉淀协作流程→通晒投票→双周分享会"
-  },
-  {
-    sprint: 18, startDate: "2026-12-01", endDate: "2026-12-12", skillId: "MK02",
-    theme: "AI用户增长与留存（进阶）", phase: "advanced", targetDepartments: ["marketing", "operations"],
-    aiChampionRole: "营销+运营AI科代表联合主导个性化营销AI体系建设",
-    caseTarget: 4, sharingTheme: "AI增长进阶——个性化营销与复购率提升",
-    milestones: ["增长AI进阶实战", "个性化营销体系建立", "复购率提升目标验证"],
-    closedLoop: "深入学习增长AI→AI科代表联合主导个性化体系→产出增长案例→沉淀增长模板→通晒投票→全公司可裂变复用→双周分享会"
-  },
-  {
-    sprint: 19, startDate: "2026-12-15", endDate: "2026-12-26", skillId: "MK03",
-    theme: "年度AI转型总结与2027规划", phase: "review", targetDepartments: ["all"],
-    aiChampionRole: "各部门AI科代表汇总本部门全年AI成果，评选年度最佳AI案例",
-    caseTarget: 14, sharingTheme: "年度AI转型成果大会——最佳案例颁奖+2027规划",
-    milestones: ["各部门AI成果汇总", "年度最佳AI案例评选", "2027年AI转型规划制定"],
-    closedLoop: "全年案例回顾→AI科代表汇总部门成果→评选年度最佳案例→沉淀年度知识库→全公司通晒投票→年度大会颁奖→制定2027规划"
+    sprint: 19, startDate: "2026-12-07", endDate: "2026-12-18", skillId: "MK03",
+    theme: "年度AI转型成果大会——最佳案例颁奖", phase: "review", targetDepartments: ["all"],
+    aiChampionRole: "各部门AI科代表汇总本部门全年AI成果(案例数/积分/裂变数/效率提升数据)，提名年度最佳",
+    caseTarget: 14, sharingTheme: "2026 CUPSHE AI转型年度成果大会——颁奖+2027规划",
+    milestones: ["各部门AI成果数据汇总", "年度最佳AI案例/最佳AI科代表/最佳裂变案例评选", "2027年AI转型规划v1.0"],
+    closedLoop: "全年案例回顾→AI科代表汇总部门成果→评选年度最佳(案例/科代表/裂变)→沉淀年度知识库→全公司通晒投票→年度大会颁奖→制定2027规划"
   },
 ];
